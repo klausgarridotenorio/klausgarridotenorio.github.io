@@ -20,7 +20,7 @@ author_profile: true
 
   <section class="teaching-course">
     <h3>Behavioral Operations, <span class="teaching-course__meta">MSc Supply Chain Management, Spring 2025, 2026</span></h3>
-    <p>Teaching assistant — Guest lecture + Examination support.</p>
+    <p>Teaching assistant — Lecturer + Examination support.</p>
   </section>
 
   <section class="teaching-course">
@@ -45,5 +45,14 @@ author_profile: true
   <section class="teaching-course">
     <h3>Mentoring, <span class="teaching-course__meta">Winter 2021</span></h3>
     <p>Mentor for study performance and academic attitude.</p>
+  </section>
+</div>
+
+## SGH Warsaw School of Economics
+
+<div class="teaching-course-list">
+  <section class="teaching-course">
+    <h3>Future Supply Chains (CEMS), <span class="teaching-course__meta">CEMS MSc &amp; Spring, 2026</span></h3>
+    <p>Guest leturer.</p>
   </section>
 </div>

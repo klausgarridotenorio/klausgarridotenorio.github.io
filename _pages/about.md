@@ -70,7 +70,7 @@ Airport Operations (Queue Jump) Passengers Boarding Before their Assigned Boardi
   </section>
 </div>
 
-## Selected Presentations
+## Conference Presentations
 
 - **INFORMS 2026** — Invited BOM session presentation (1st & 2nd working paper)
 - **POMS 2026** — Production and Operations Management Society Annual Conference (Airport Operations paper)
@@ -80,3 +80,12 @@ Airport Operations (Queue Jump) Passengers Boarding Before their Assigned Boardi
 - **CONVERSATIONS 2025** — Chatbots and Human-Centered AI (Technical Paper)
 - **MSOM 2025** — Manufacturing & Service Operations Management (1st working paper)
 - **IPSERA Doctoral Workshop 2025**, Rotterdam, The Netherlands (1st working paper)
+
+## Seminar Presentations
+
+- 2026 **Department Information Systems and Operations Management - Tilburg University** — External seminar
+- 2026 **Department of Technology & Operation Management - RSM** — Internal seminar
+- 2026 **Department of Supply Chain Management - University of Cologne** — Human-AI Reading Club 
+- 2025 **Negotiation and Team Resources (NTR)** - AI Negotiation Think Tank 
+- 2025 **Department Operation Management - Information Systems - IE University** — Brownbag seminar
+- 2024 **Psychology of AI Lab - RSM** — Brownbag seminar
