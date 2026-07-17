@@ -23,4 +23,4 @@ author_profile: true
 
 **Hybrid (Rule-based + Gen AI) Chatbot: Automating Negotiations**  
 <u>K. Garrido Tenorio</u>, M. Becker-Peth, J. de Vries  
-*Lecture Notes in Computer Science (vol. 16440), Springer* — [Paper](/files/Hybrid_Chatbot_Automating_Negotiations.pdf) · [Code](https://github.com/KGarridoTenorio/HybridChatbot)
+*Lecture Notes in Computer Science (vol. 16440), Springer* — [Paper](/files/Hybrid_Chatbot_Automating_Negotiations.pdf) · [Code](https://github.com/klausgarridotenorio/HybridChatbot)

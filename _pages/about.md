@@ -14,12 +14,6 @@ My dissertation, *Dealing with Conversational Agents*, studies how the rise AI A
 
 Before starting the PhD, I completed an MSc in Business Analytics & Management at RSM, where my thesis on demand forecasting in grocery retail won the 2024 [**Anton Dreesmann Award**](https://www.linkedin.com/posts/klausgarrido_1st-place-at-the-anton-dreesmann-award-best-ugcPost-7214882748937715712-_Fgg/) for the best retail thesis in the Netherlands. My BSc background is in Economics, I graduated with honours in Economics & Business Economics - Profile of Economic Development and Globalization at the Rijksuniversiteit Groningen.
 
-<p>
-  <a href="/files/Klaus_Garrido_Tenorio_CV.pdf" class="cv-link">
-    View my CV
-  </a>
-</p>
-
 
 **Lines of Researchs**
 
@@ -61,7 +55,7 @@ Airport Operations (Queue Jump) Passengers Boarding Before their Assigned Boardi
     <p class="pub-actions">
       <button onclick="toggleAbstract('abstract-hybrid')" class="pub-btn">Abstract</button>
       <a href="/files/Hybrid_Chatbot_Automating_Negotiations.pdf" target="_blank" class="pub-btn">Paper</a>
-      <a href="https://github.com/KGarridoTenorio/HybridChatbot" target="_blank" class="pub-btn">Code</a>
+      <a href="https://github.com/klausgarridotenorio/HybridChatbot" target="_blank" class="pub-btn">Code</a>
     </p>
 
     <div id="abstract-hybrid" class="pub-abstract">
