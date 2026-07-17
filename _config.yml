@@ -11,9 +11,9 @@ title                    : "Klaus Garrido Tenorio"
 title_separator          : "-"
 name                     : "Klaus Garrido Tenorio"
 description              : &description "PhD Candidate, Rotterdam School of Management, Erasmus University Rotterdam"
-url                      : https://mrgarrido.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+url                      : https://klausgarridotenorio.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
-repository               : "MrGarrido/mrgarrido.github.io"
+repository               : "kgarridotenorio/klausgarridotenorio.github.io"
 teaser                   :  # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 breadcrumbs              : false # true, false (default)
 words_per_minute         : 160
@@ -69,8 +69,8 @@ social:
   type                   : Person
   name                   : Klaus Garrido Tenorio
   links: # An array of links to social media profiles
-    - "https://github.com/MrGarrido"
-    - "https://www.linkedin.com/in/klaus-garrido-tenorio/"
+    - "https://github.com/KGarridoTenorio"
+    - "https://www.linkedin.com/in/klausgarrido/"
 
 
 # Analytics
@@ -84,9 +84,9 @@ analytics:
 author:
   name             : "Klaus Garrido Tenorio"
   avatar           : "profile.png"
-  bio              : "PhD Candidate in Behavioral Operations"
-  location         : "Rotterdam, The Netherlands"
-  employer         : "Rotterdam School of Management, Erasmus University Rotterdam"
+  bio              : "PhD Candidate"
+  location         : "Erasmus Universiteit Rotterdam"
+  employer         : "Rotterdam School of Management"
   pubmed           :
   googlescholar    :
   email            : "garridotenorio@rsm.nl"
@@ -98,13 +98,13 @@ author:
   flickr           :
   facebook         :
   foursquare       :
-  github           : MrGarrido
+  github           : "KGarridoTenorio"
   google_plus      :
   keybase          :
   instagram        :
   impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
-  linkedin         : klaus-garrido-tenorio
+  linkedin         : "klausgarrido"
   orcid            : 
   pinterest        :
   soundcloud       :
@@ -115,7 +115,7 @@ author:
   vine             :
   weibo            :
   xing             :
-  youtube          :
+  youtube          : "watch?v=RCPtJney7-s&t=46m2s"
   wikipedia        :
 
 

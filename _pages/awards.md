@@ -7,6 +7,9 @@ author_profile: true
 
 ## Awards
 
+- **DPW Awards (Judging Panel)**, 2025  
+  Procurement leaders evaluating startups shaping the future of procurement and supply chain
+
 - **Anton Dreesmann Award**, 2024  
   Best retail thesis in the Netherlands, for "Forecasting Demand in Grocery Retail"
 
@@ -14,7 +17,7 @@ author_profile: true
 
 - **2nd Place**, IBM–FC Groningen Digital Business Challenge, 2021
 
-## Summer Schools & Advanced Training
+## Summer Schools & Training
 
 - **Tinbergen Institute** — AI Agents
 - **Tinbergen Institute** — Deep Learning

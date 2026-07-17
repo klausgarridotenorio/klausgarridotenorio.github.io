@@ -10,17 +10,17 @@ author_profile: true
 <div class="teaching-course-list">
   <section class="teaching-course">
     <h3>Fundamental Models of Operations Management, <span class="teaching-course__meta">MSc Business Analytics &amp; Management, Fall 2024, 2025</span></h3>
-    <p>Teaching assistant — designing assessments for the core operations modeling course.</p>
+    <p>Teaching assistant — Designing and grading assignments + running group workshops.</p>
   </section>
 
   <section class="teaching-course">
     <h3>Business Analytics and Decision Making, <span class="teaching-course__meta">Executive MBA, Spring 2024, 2025</span></h3>
-    <p>Teaching assistant — practical workshops translating analytics methods into managerial decision-making.</p>
+    <p>Teaching assistant — Handling Q&A during workshops to translating analytics into managerial decision-making.</p>
   </section>
 
   <section class="teaching-course">
     <h3>Behavioral Operations, <span class="teaching-course__meta">MSc Supply Chain Management, Spring 2025, 2026</span></h3>
-    <p>Guest lecture on behavioral operations.</p>
+    <p>Teaching assistant — Guest lecture + Examination support.</p>
   </section>
 
   <section class="teaching-course">
