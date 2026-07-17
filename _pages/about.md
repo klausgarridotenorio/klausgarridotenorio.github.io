@@ -8,16 +8,16 @@ redirect_from:
   - /about.html
 ---
 
-I am a PhD candidate in the department of Technology & Operations Management at the [Rotterdam School of Management, Erasmus University Rotterdam](https://www.rsm.nl/). 
+I am a PhD candidate in the department of Technology &amp; Operations Management at the [Rotterdam School of Management, Erasmus University Rotterdam](https://www.rsm.nl/). 
 
 My dissertation, *Dealing with Conversational Agents*, studies how the rise AI Agents automating supply-chain negotiatons affects human decision-making. I conducted experiments at the Erasmus Behavioural Lab and at CentERlab of Tilburg School of Economics and Management. I examine how humans negotiate with, delegate to, and behave after interacting with AI counterparts in B2B settings. 
 
-Before starting the PhD, I completed an MSc in Business Analytics & Management at RSM, where my thesis on demand forecasting in grocery retail won the 2024 [**Anton Dreesmann Award**](https://www.linkedin.com/posts/klausgarrido_1st-place-at-the-anton-dreesmann-award-best-ugcPost-7214882748937715712-_Fgg/) for the best retail thesis in the Netherlands. My BSc background is in Economics, I graduated with honours in Economics & Business Economics - Profile of Economic Development and Globalization at the Rijksuniversiteit Groningen.
+Before starting the PhD, I completed an MSc in Business Analytics &amp; Management at RSM, where my thesis on demand forecasting in grocery retail won the 2024 [**Anton Dreesmann Award**](https://www.linkedin.com/posts/klausgarrido_1st-place-at-the-anton-dreesmann-award-best-ugcPost-7214882748937715712-_Fgg/) for the best retail thesis in the Netherlands. My BSc background is in Economics, I graduated with honours in Economics &amp; Business Economics - Profile of Economic Development and Globalization at the Rijksuniversiteit Groningen.
 
 
 **Lines of Researchs**
 
-Conduct Behavioral Lab Experiments with Hybrid Chatbots (LLM & Rule-based) as Automated Negotiation Agents in Supply Chain Settings.
+Conduct Behavioral Lab Experiments with Hybrid Chatbots (LLM &amp; Rule-based) as Automated Negotiation Agents in Supply Chain Settings.
 
 Airport Operations (Queue Jump) Passengers Boarding Before their Assigned Boarding Group.
 
@@ -66,19 +66,19 @@ Airport Operations (Queue Jump) Passengers Boarding Before their Assigned Boardi
 
 ## Conference Presentations
 
-- **INFORMS 2026** — Invited BOM session presentation (1st & 2nd working paper)
+- **INFORMS 2026** — Invited BOM session presentation (1st &amp; 2nd working paper)
 - **POMS 2026** — Production and Operations Management Society Annual Conference (Airport Operations paper)
-- **Behavioral Operations Conference — Young Scholars**, 2025 & 2026 (1st & 2nd working paper)
-- **CEMS Research Seminar on Supply Chain Management**, Riezlern, Austria, 2025 & 2026 
+- **Behavioral Operations Conference — Young Scholars**, 2025 &amp; 2026 (1st &amp; 2nd working paper)
+- **CEMS Research Seminar on Supply Chain Management**, Riezlern, Austria, 2025 &amp; 2026 
 - **INFORMS 2025** — Invited BOM session presentation (1st working paper)
 - **CONVERSATIONS 2025** — Chatbots and Human-Centered AI (Technical Paper)
-- **MSOM 2025** — Manufacturing & Service Operations Management (1st working paper)
+- **MSOM 2025** — Manufacturing &amp; Service Operations Management (1st working paper)
 - **IPSERA Doctoral Workshop 2025**, Rotterdam, The Netherlands (1st working paper)
 
 ## Seminar Presentations
 
 - 2026 **Department Information Systems and Operations Management - Tilburg University** — External seminar
-- 2026 **Department of Technology & Operation Management - RSM** — Internal seminar
+- 2026 **Department of Technology &amp; Operation Management - RSM** — Internal seminar
 - 2026 **Department of Supply Chain Management - University of Cologne** — Human-AI Reading Club 
 - 2025 **Negotiation and Team Resources (NTR)** - AI Negotiation Think Tank 
 - 2025 **Department Operation Management - Information Systems - IE University** — Brownbag seminar

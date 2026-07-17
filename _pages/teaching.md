@@ -52,7 +52,7 @@ author_profile: true
 
 <div class="teaching-course-list">
   <section class="teaching-course">
-    <h3>Future Supply Chains (CEMS), <span class="teaching-course__meta">CEMS MSc &amp; Spring, 2026</span></h3>
-    <p>Guest leturer.</p>
+    <h3>Future Supply Chains, <span class="teaching-course__meta"> MSc Supply Chain Management; 2026</span></h3>
+    <p>Guest lecturer.</p>
   </section>
 </div>
