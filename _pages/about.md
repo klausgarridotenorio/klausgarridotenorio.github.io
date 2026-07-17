@@ -57,6 +57,16 @@ Airport Operations (Queue Jump) Passengers Boarding Before their Assigned Boardi
     <h3><strong>Hybrid (Rule-based + Gen AI) Chatbot: Automating Negotiations</strong></h3>
     <p class="research-authors">Klaus Garrido Tenorio, Michael Becker-Peth, and Jelle de Vries</p>
     <p class="paper-status"><em>Technical - Part of the Springer book series: Lecture Notes in Computer Science (volume 16440) </em></p>
+
+    <p class="pub-actions">
+      <button onclick="toggleAbstract('abstract-hybrid')" class="pub-btn">Abstract</button>
+      <a href="/files/Hybrid_Chatbot_Automating_Negotiations.pdf" target="_blank" class="pub-btn">Paper</a>
+      <a href="https://github.com/KGarridoTenorio/HybridChatbot" target="_blank" class="pub-btn">Code</a>
+    </p>
+
+    <div id="abstract-hybrid" class="pub-abstract">
+      <p>This paper proposes a hybrid framework combining rule-based systems with Large Language Models (LLMs) for automated supply chain negotiations. Building on successful industry implementations of rule-based negotiation bots and addressing vulnerabilities identified in MIT's 2025 LLM negotiation competition, the approach leverages game-theoretic principles while utilizing LLMs for natural language tasks. The natural language tasks include Constraint and Offer Interpreters, and Message Generation. In a nutshell: 1) prompt the LLM with game-theoretic offers; 2) check if the generated message is profitable enough. A rule-based wrapper ensures Pareto-efficient outcomes by validating LLM outputs post-generation before sending them to the counterpart. Although designed for procurement negotiations, researchers and practitioners can apply this framework to various negotiation contexts. It is entirely developed in Python, a widely-used open-source programming language.</p>
+    </div>
   </section>
 </div>
 
