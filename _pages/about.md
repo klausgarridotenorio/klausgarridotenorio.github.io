@@ -79,7 +79,7 @@ Airport Operations (Queue Jump) Passengers Boarding Before their Assigned Boardi
 
 - 2026 **Department Information Systems and Operations Management - Tilburg University** — External seminar
 - 2026 **Department of Technology &amp; Operation Management - RSM** — Internal seminar
-- 2026 **Department of Supply Chain Management - University of Cologne** — Human-AI Reading Club 
+- 2026 **Department of Supply Chain Management &amp; University of Cologne** — Human-AI Reading Club 
 - 2025 **Negotiation and Team Resources (NTR)** - AI Negotiation Think Tank 
 - 2025 **Department Operation Management - Information Systems - IE University** — Brownbag seminar
 - 2024 **Psychology of AI Lab - RSM** — Brownbag seminar
