@@ -1,0 +1,621 @@
+---
+---
+
+/*
+ *    Minimal Mistakes Jekyll Theme
+ *
+ *  - Michael Rose
+ *  - mademistakes.com
+ *  - https://twitter.com/mmistakes
+ *
+*/
+
+@import "vendor/breakpoint/breakpoint"; // media query mixins
+@import "variables";
+@import "mixins";
+@import "vendor/susy/susy";
+
+@import "reset";
+@import "base";
+
+@import "utilities";
+@import "animations";
+@import "tables";
+@import "buttons";
+@import "notices";
+@import "masthead";
+@import "navigation";
+@import "footer";
+@import "syntax";
+
+@import "forms";
+
+@import "page";
+@import "archive";
+@import "sidebar";
+
+@import "vendor/font-awesome/fontawesome";
+@import "vendor/font-awesome/solid";
+@import "vendor/font-awesome/brands";
+@import "vendor/magnific-popup/magnific-popup";
+@import "print";
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+iframe,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+.page,
+.archive,
+.page__content,
+#main,
+.sidebar,
+.masthead__inner-wrap,
+.greedy-nav,
+.site-nav-static {
+  max-width: 100%;
+}
+
+.page__content,
+.archive {
+  overflow-wrap: break-word;
+}
+
+.profile-photo {
+  display: block;
+  max-width: 260px;
+  margin: 0 auto 0.65rem;
+  border-radius: 50%;
+}
+
+.author__name--under-avatar {
+  margin: 0 0 0.9rem;
+  color: #333;
+  font-size: 0.98rem;
+  font-weight: 400;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.contact-label {
+  margin: 0.75rem 0 0.25rem;
+  color: #333;
+  font-size: 0.95rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.contact-email {
+  color: #333;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.contact-email a {
+  color: #2f5f8f;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.author__urls-wrapper,
+.author__urls {
+  display: block;
+  position: static;
+}
+
+.author__urls {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.author__urls:before,
+.author__urls:after {
+  display: none;
+}
+
+.site-nav-static {
+  background: #fff;
+}
+
+.site-nav-static .visible-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav-static a {
+  display: block;
+  padding: 0.5rem 0;
+  color: #7a8288;
+  text-decoration: none;
+}
+
+.site-nav-static a:hover {
+  color: #494e52;
+}
+
+@media (min-width: 57.8125em) {
+  .site-nav-static .visible-links {
+    padding-left: 21.1864406779%;
+  }
+}
+
+.cv-link,
+.pub-btn {
+  display: inline-block;
+  border: 1px solid #7b8794;
+  border-radius: 4px;
+  background: #fff;
+  color: #243447;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.cv-link {
+  padding: 0.35rem 0.65rem;
+}
+
+.pub-btn {
+  margin: 0 0.35rem 0.35rem 0;
+  padding: 0.45rem 0.7rem;
+  cursor: pointer;
+}
+
+.cv-link:hover,
+.pub-btn:hover {
+  border-color: #2f5f8f;
+  color: #2f5f8f;
+  text-decoration: none;
+}
+
+.research-list {
+  margin-top: 1.25rem;
+}
+
+.research-item {
+  padding: 1.15rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.research-item:first-child {
+  padding-top: 0;
+}
+
+.research-item h3 {
+  margin-top: 0;
+  margin-bottom: 0.35rem;
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.research-authors,
+.paper-status {
+  margin: 0.2rem 0;
+  color: #3f4650;
+}
+
+.research-authors {
+  font-family: $serif;
+  font-size: 0.94rem;
+  line-height: 1.45;
+}
+
+.paper-status {
+  font-size: 0.92rem;
+}
+
+.paper-status--jmp {
+  display: inline-block;
+  margin: 0.35rem 0 0.15rem;
+  padding: 0.18rem 0.55rem;
+  border-left: 3px solid #2f5f8f;
+  background: #f3f7fb;
+  color: #26384a;
+  font-weight: 700;
+}
+
+.pub-awards {
+  margin: 0.7rem 0;
+  padding-left: 1.25rem;
+}
+
+.pub-actions {
+  margin: 0.75rem 0 0;
+}
+
+.pub-abstract {
+  display: none;
+  margin-top: 0.85rem;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid #6f7f91;
+  background-color: #f8fafc;
+  color: #2f3a45;
+  font-size: 0.9rem;
+}
+
+.research-item--compact {
+  padding: 0.85rem 0;
+}
+
+.fieldwork-paper {
+  margin: 1.5rem 0 2.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.fieldwork-paper__label {
+  margin: 0 0 0.35rem;
+  color: #52616f;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.fieldwork-paper__text {
+  margin-bottom: 0.85rem;
+}
+
+.fieldwork-paper-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.fieldwork-paper-grid--single {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 560px;
+}
+
+.fieldwork-paper-grid--learning {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.fieldwork-platform {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(220px, 0.75fr);
+  gap: 1rem;
+  align-items: center;
+  margin: 0.25rem 0 1.25rem;
+}
+
+.fieldwork-platform__image-link {
+  display: block;
+}
+
+.fieldwork-platform img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: top center;
+  border: 1px solid #d9dee4;
+  border-radius: 6px;
+  background: #f5f7f9;
+}
+
+.fieldwork-platform figcaption {
+  margin: 0;
+  color: #3f4650;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.fieldwork-platform strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #243447;
+  font-size: 1rem;
+}
+
+.fieldwork-platform a {
+  color: #243447;
+  text-decoration: none;
+}
+
+.fieldwork-platform a:hover {
+  text-decoration: underline;
+}
+
+.fieldwork-card {
+  margin: 0;
+}
+
+.fieldwork-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid #d9dee4;
+  border-radius: 6px;
+  background: #f5f7f9;
+}
+
+.fieldwork-paper-grid--single .fieldwork-card img {
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+.fieldwork-card figcaption {
+  margin-top: 0.65rem;
+  color: #3f4650;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.media-mention-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem 0.85rem;
+  margin: 0.35rem 0 2.25rem;
+}
+
+.media-mention-card {
+  min-width: 0;
+}
+
+.media-mention-image-link {
+  display: block;
+}
+
+.media-mention-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: top center;
+  border: 1px solid #d9dee4;
+  border-radius: 6px;
+  background: #f5f7f9;
+}
+
+.media-mention-source {
+  margin: 0.6rem 0 0.2rem;
+  color: #52616f;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.media-mention-card h3 {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+
+.media-mention-card h3 a {
+  color: #243447;
+  text-decoration: none;
+}
+
+.media-mention-card h3 a:hover {
+  text-decoration: underline;
+}
+
+.teaching-platform {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.78fr);
+  gap: 1.25rem;
+  align-items: center;
+  margin: 1.35rem 0 2.25rem;
+  padding: 1.15rem 0;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.teaching-platform__label,
+.teaching-material__label {
+  margin: 0 0 0.35rem;
+  color: #52616f;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.teaching-platform h2 {
+  margin: 0 0 0.55rem;
+  font-size: 1.25rem;
+}
+
+.teaching-platform p {
+  margin-top: 0;
+}
+
+.teaching-actions {
+  margin: 0.95rem 0 0;
+}
+
+.teaching-platform__image-link {
+  display: block;
+}
+
+.teaching-platform__image-link img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top center;
+  border: 1px solid #d9dee4;
+  border-radius: 6px;
+  background: #f5f7f9;
+}
+
+.teaching-course-list {
+  margin-top: 1rem;
+}
+
+.teaching-course {
+  padding: 1.1rem 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.teaching-course:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.teaching-course h3,
+.teaching-material h3 {
+  margin-top: 0;
+  margin-bottom: 0.3rem;
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.teaching-course__meta {
+  color: #52616f;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+.teaching-course__evaluation {
+  display: inline-block;
+  margin: 0 0 0.55rem;
+  padding: 0.18rem 0.55rem;
+  border-left: 3px solid #7a8f3a;
+  background: #f4f7ed;
+  color: #38451d;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.teaching-course p,
+.teaching-material p {
+  margin-bottom: 0.65rem;
+}
+
+.teaching-course ul {
+  margin-top: 0.45rem;
+}
+
+.teaching-materials {
+  margin-top: 1rem;
+}
+
+.teaching-material {
+  padding: 1rem 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.teaching-material h3 a {
+  color: #243447;
+  text-decoration: none;
+}
+
+.teaching-material h3 a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 899px) {
+  .site-nav-static .visible-links {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  #main {
+    width: 100%;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    box-sizing: border-box;
+  }
+
+  .masthead__menu {
+    overflow-x: visible;
+  }
+
+  .site-nav-static {
+    min-width: 0;
+    width: 100%;
+    overflow: visible;
+  }
+
+  .site-nav-static .visible-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1rem;
+    width: 100%;
+    min-width: 0;
+    padding-left: 0;
+  }
+
+  .site-nav-static .visible-links li {
+    display: block;
+  }
+
+  .site-nav-static a {
+    margin: 0;
+    padding: 0.35rem 0;
+  }
+
+  .masthead__menu-item {
+    white-space: nowrap;
+  }
+
+  .sidebar,
+  .page,
+  .archive,
+  .page__content {
+    display: block;
+    float: none;
+    clear: both;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .author__avatar,
+  .author__content,
+  .author__urls-wrapper {
+    display: block;
+    width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .author__urls {
+    text-align: left;
+  }
+
+  .profile-photo {
+    max-width: 210px;
+  }
+
+  .fieldwork-paper-grid,
+  .fieldwork-paper-grid--single,
+  .fieldwork-paper-grid--learning {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fieldwork-platform {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .media-mention-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .teaching-platform {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

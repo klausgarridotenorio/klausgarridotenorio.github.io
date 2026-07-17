@@ -1,0 +1,11 @@
+# main links
+main:
+  - title: "Research"
+    url: "#research"
+  - title: "Teaching"
+    url: "/teaching/"
+  - title: "Awards"
+    url: "/awards/"
+  - title: "CV"
+    url: "/files/Klaus_Garrido_Tenorio_CV.pdf"
+    external: true
