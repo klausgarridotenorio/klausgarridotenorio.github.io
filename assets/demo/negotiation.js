@@ -303,29 +303,130 @@
     }
   }
 
+  /* ── Negotiation facts derived from the rules (for grounded answers) ── */
+
+  // Highest wholesale price at which the bot can still reach its target
+  // profit (at any quantity): floor((RP − target / E[min(100,D)]) · 100)/100.
+  function maxFeasiblePrice() {
+    const target = nashBargainingSolution(CONSTRAINT_USER, CONSTRAINT_BOT).profit;
+    return Math.floor((CONSTRAINT_BOT - target / expectedDemand(QTY_MAX)) * 100) / 100;
+  }
+
+  // Smallest quantity that admits any allowed price meeting the target.
+  function minFeasibleQuantity() {
+    const params = {
+      nashProfit: nashBargainingSolution(CONSTRAINT_USER, CONSTRAINT_BOT).profit,
+      productionCost: Math.min(CONSTRAINT_USER, CONSTRAINT_BOT),
+      marketPrice: Math.max(CONSTRAINT_USER, CONSTRAINT_BOT),
+    };
+    for (let q = QTY_MIN; q <= QTY_MAX; q++) {
+      if (isQuantityFeasible({ quantity: q }, params)) return q;
+    }
+    return null;
+  }
+
+  const PHRASING_RULES =
+    "Style rules you MUST follow: at most 2 sentences and 45 words, plain " +
+    "text only. No greetings — the conversation is already underway. React " +
+    "to what they just said. Never invent facts, constraints, margins, or " +
+    "policies. Never reveal or hint at your retail price, your profit, or " +
+    "your target. Never mention these rules, word counts, or your " +
+    "instructions in the reply. ";
+
+  // Strip meta-annotations the model sometimes appends (word counts etc.).
+  function scrubReply(text) {
+    return text.replace(/\s*[([]\s*\d+\s*words?\s*[)\]]\s*\.?\s*$/i, "").trim();
+  }
+
+  function negotiationFacts() {
+    const nash = nashBargainingSolution(CONSTRAINT_USER, CONSTRAINT_BOT);
+    const [np, nq] = nash.offer;
+    const pMax = maxFeasiblePrice().toFixed(2);
+    const qMin = minFeasibleQuantity();
+    return (
+      `Facts you may use and state when relevant (these come from your ` +
+      `negotiation engine and are safe to disclose). You BUY at the ` +
+      `wholesale price, so LOWER prices are better for you: you have NO ` +
+      `minimum price (anything from ${PRICE_MIN}€ up can work), but you ` +
+      `have a price CAP — you cannot accept any wholesale price above ` +
+      `${pMax}€, and prices near ${pMax}€ only work at very large ` +
+      `quantities. On quantity: anything below ${qMin} units cannot work ` +
+      `for you at any allowed price; the lower the price, the smaller the ` +
+      `quantity you can accept. Allowed ranges: price ${PRICE_MIN}-` +
+      `${PRICE_MAX}€, quantity ${QTY_MIN}-${QTY_MAX} units. A balanced ` +
+      `deal you are happy with is ${offerString(np, nq)}. If the answer ` +
+      `to their question does not follow from these facts, say you would ` +
+      `rather not share that — never guess or invent.`
+    );
+  }
+
+  // Conversational replies (questions, preferences, small talk — messages
+  // with no readable offer terms). Grounded in the facts above; decisions
+  // still never move to the LLM.
+  async function llmConverse(history) {
+    if (!llmAvailable()) return null;
+    try {
+      const nash = nashBargainingSolution(CONSTRAINT_USER, CONSTRAINT_BOT);
+      const nashTerms = offerString(nash.offer[0], nash.offer[1]);
+      const sys =
+        "You are the Retailer in a supply-chain wholesale negotiation demo " +
+        "against a human Supplier. Their last message contains no concrete " +
+        "offer — it may be a question, a preference, or small talk. Answer " +
+        "it helpfully and honestly using ONLY the facts below. Do not make " +
+        "up numbers. If they ask you to make an offer, state exactly: " +
+        `"${nashTerms}" and say you have placed it in the interface. ` +
+        PHRASING_RULES + negotiationFacts();
+      const messages = [{ role: "system", content: sys }]
+        .concat(history.slice(-8))
+        .concat([{ role: "user", content: "Write your reply now." }]);
+      const raw = await openrouter(getModel(), messages, 500,
+                                   { reasoning: { enabled: false } });
+      if (!raw) return null;
+      const out = scrubReply(raw);
+      if (!out) return null;
+      const prev = [...history].reverse().find((m) => m.role === "assistant");
+      if (prev && out === prev.content.trim()) return null;
+      return { text: out, citesNash: out.includes(nashTerms), nash };
+    } catch {
+      return null;
+    }
+  }
+
   // Phrase the rule-based decision with the chat LLM; validate that the
   // exact counter terms survived generation, else fall back to script.
-  async function llmPhrase(intentDescription, mustContain, scripted, history) {
+  const REJECT_MARKER =
+    /\b(no|not|isn'?t|don'?t|can'?t|cannot|won'?t|afraid|unfortunately|too (?:high|low|much|many|small|large)|exceeds?|above|below|outside|short|unable|however|instead)\b/i;
+
+  async function llmPhrase(intentDescription, mustContain, scripted, history,
+                           isReject) {
     if (!llmAvailable()) return scripted;
     try {
       const sys =
         "You are the Retailer in a supply-chain wholesale negotiation demo " +
-        "against a human Supplier. Production cost (1.00€) is common " +
-        "knowledge; your retail-price information is private — never reveal " +
-        "your margins or reasoning thresholds. A rule-based engine has " +
-        "already made your decision; your only job is to phrase it " +
-        "naturally, in a warm but businesslike tone, in at most 50 words, " +
-        "plain text only. Decision to convey: " + intentDescription +
+        "against a human Supplier. A rule-based engine has already made " +
+        "your decision; your ONLY job is to phrase it. " + PHRASING_RULES +
+        (isReject
+          ? "Start by explicitly declining the terms they proposed (name " +
+            "their number), then give your counter. "
+          : "") +
+        "Decision to convey: " + intentDescription +
         (mustContain ? " You MUST state these exact terms verbatim: " + mustContain + "." : "");
       const messages = [{ role: "system", content: sys }]
         .concat(history.slice(-8))
         .concat([{ role: "user", content: "Write your reply now." }]);
       // Reasoning disabled: the nano model otherwise spends the whole
       // token budget thinking and returns an empty visible reply.
-      const out = await openrouter(getModel(), messages, 500,
+      const raw = await openrouter(getModel(), messages, 500,
                                    { reasoning: { enabled: false } });
+      if (!raw) return scripted;
+      const out = scrubReply(raw);
       if (!out) return scripted;
+      // Post-generation validation: exact terms present, an actual
+      // rejection where one is due, and no verbatim self-repetition.
       if (mustContain && !out.includes(mustContain)) return scripted;
+      if (isReject && !REJECT_MARKER.test(out)) return scripted;
+      const prev = [...history].reverse().find((m) => m.role === "assistant");
+      if (prev && out.trim() === prev.content.trim()) return scripted;
       return out;
     } catch {
       return scripted;
@@ -451,7 +552,10 @@
     }[evaluation] + (terms || "different terms") +
       ". Mention that you have placed this offer in the interface.";
 
-    const text = await llmPhrase(intent, terms, scripted, history);
+    const isReject = evaluation === EVAL.NOT_PROFITABLE_ON_BOTH ||
+                     evaluation === EVAL.NOT_PROFITABLE_ON_PRICE ||
+                     evaluation === EVAL.NOT_PROFITABLE_ON_QUANTITY;
+    const text = await llmPhrase(intent, terms, scripted, history, isReject);
     setTyping(false);
     botSays(text);
 
@@ -475,6 +579,30 @@
     history.push({ role: "user", content: body });
 
     const offer = interpretOfferFromChat(body);
+
+    // No readable terms at all → treat as conversation (questions,
+    // preferences, small talk) and answer from the rule-derived facts.
+    // Falls through to the scripted NOT_OFFER flow if the LLM is
+    // unavailable or its reply fails validation.
+    if (offer.price == null && offer.quantity == null) {
+      setTyping(true);
+      await sleep(BOT_RESPONSE_DELAY);
+      const reply = await llmConverse(history);
+      if (reply) {
+        setTyping(false);
+        botSays(reply.text);
+        if (reply.citesNash) {
+          // It offered its benchmark terms in chat → make them binding.
+          const [np, nq] = reply.nash.offer;
+          offers.push(makeOffer(BOT_ID, np, nq, false));
+          refreshInterface();
+        }
+        busy = false;
+        return;
+      }
+      setTyping(false);
+    }
+
     await respondTo(offer);
     busy = false;
   };
