@@ -15,7 +15,7 @@ My dissertation, *Dealing with Conversational Agents*, studies how the rise AI A
 Before starting the PhD, I completed an MSc in Business Analytics &amp; Management at RSM, where my thesis on demand forecasting in grocery retail won the 2024 [**Anton Dreesmann Award**](https://www.linkedin.com/posts/klausgarrido_1st-place-at-the-anton-dreesmann-award-best-ugcPost-7214882748937715712-_Fgg/) for the best retail thesis in the Netherlands. My BSc background is in Economics, I graduated with honours in Economics &amp; Business Economics - Profile of Economic Development and Globalization at the Rijksuniversiteit Groningen.
 
 
-**Lines of Researchs**
+**Lines of Research**
 
 Conduct Behavioral Lab Experiments with Hybrid Chatbots (LLM &amp; Rule-based) as Automated Negotiation Agents in Supply Chain Settings.
 
