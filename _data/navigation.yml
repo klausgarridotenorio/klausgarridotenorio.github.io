@@ -8,6 +8,8 @@ main:
     url: "/#teaching"
   - title: "Awards"
     url: "/#awards"
+  - title: "Experiments"
+    url: "/experiments/"
   - title: "CV"
     url: "/files/Klaus_Garrido_Tenorio_CV.pdf"
     external: true

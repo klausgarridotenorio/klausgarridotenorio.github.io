@@ -1,0 +1,168 @@
+/* Automated Negotiation Demo — styling adapted from the oTree
+   experiment's experiment.css (otree-chat block) to fit the site theme. */
+
+.neg-banner {
+  border: 1px solid #d9e3ea;
+  background: #f2f7fa;
+  border-radius: 4px;
+  padding: 0.7em 1em;
+  font-size: 0.95em;
+  margin-bottom: 0.6em;
+}
+
+.neg-banner--muted {
+  background: #f6f6f6;
+  border-color: #e2e2e2;
+}
+
+.neg-chat {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px;
+  margin-bottom: 1.2em;
+}
+
+.neg-chat__messages {
+  height: 340px;
+  overflow-y: auto;
+  background: #f4f4f4;
+  border-radius: 3px;
+  margin-bottom: 6px;
+  padding: 8px;
+}
+
+.neg-msg {
+  margin-bottom: 0.55em;
+  line-height: 1.45;
+}
+
+.neg-msg__nick {
+  display: inline-block;
+  min-width: 120px;
+  font-weight: 700;
+  color: #52adc8;
+  vertical-align: top;
+}
+
+.neg-msg--bot .neg-msg__nick {
+  color: #c07a36;
+}
+
+.neg-msg__body {
+  display: inline-block;
+  max-width: calc(100% - 135px);
+}
+
+.neg-typing {
+  font-size: 0.85em;
+  color: #767676;
+  min-height: 1.4em;
+  margin: 0 0 4px 4px;
+  visibility: hidden;
+}
+
+.neg-chat__controls {
+  display: flex;
+  gap: 8px;
+}
+
+.neg-chat__controls input {
+  flex: 1;
+  padding: 0.45em 0.7em;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.neg-btn {
+  background: #2f6690;
+  border: 1px solid #2f6690;
+  color: #fff;
+  border-radius: 3px;
+  padding: 0.45em 1.1em;
+  cursor: pointer;
+  font-size: 0.92em;
+}
+
+.neg-btn:hover:not(:disabled) { opacity: 0.88; }
+
+.neg-btn:disabled { opacity: 0.45; cursor: default; }
+
+.neg-btn--ghost {
+  background: transparent;
+  color: #2f6690;
+}
+
+.neg-table {
+  width: 100%;
+  border: 1px solid #444;
+  border-collapse: collapse;
+  margin-bottom: 1.2em;
+  font-size: 0.95em;
+}
+
+.neg-table th,
+.neg-table td {
+  border-top: 1px solid #ddd;
+  padding: 0.7em 0.8em;
+  vertical-align: middle;
+}
+
+.neg-table th { width: 200px; text-align: left; }
+
+.neg-table input {
+  width: 110px;
+  padding: 0.35em 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.neg-status {
+  font-size: 0.85em;
+  color: #767676;
+  margin-bottom: 1em;
+}
+
+.neg-status--on { color: #2e6b46; }
+
+.neg-deal {
+  border: 1px solid #2e6b46;
+  background: #f0f7f2;
+  border-radius: 4px;
+  padding: 1em 1.2em;
+  margin: 1em 0;
+}
+
+.neg-deal h4 { margin-top: 0; }
+
+.neg-settings {
+  border: 1px solid #e2e2e2;
+  border-radius: 4px;
+  padding: 0.8em 1.1em;
+  margin: 1.6em 0;
+  font-size: 0.92em;
+}
+
+.neg-settings summary { cursor: pointer; font-weight: 700; }
+
+.neg-settings label {
+  display: block;
+  margin: 0.8em 0 0.2em;
+  font-weight: 700;
+}
+
+.neg-settings input {
+  width: 100%;
+  max-width: 460px;
+  padding: 0.4em 0.6em;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.neg-settings .neg-btn { margin-top: 0.9em; }
+
+.neg-note {
+  font-size: 0.85em;
+  color: #767676;
+}
