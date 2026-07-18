@@ -19,7 +19,7 @@ const ALLOWED_MODELS = new Set([
   "nvidia/nemotron-3.5-content-safety:free",
 ]);
 
-const MAX_TOKENS_CAP = 300;
+const MAX_TOKENS_CAP = 600;
 const MAX_MESSAGES = 24;
 const MAX_BODY_CHARS = 12000;
 
@@ -90,7 +90,7 @@ export default {
       return json({ error: "invalid JSON" }, 400, corsOrigin);
     }
 
-    const { model, messages, max_tokens } = body || {};
+    const { model, messages, max_tokens, reasoning } = body || {};
     if (!ALLOWED_MODELS.has(model)) {
       return json({ error: "model not allowed" }, 400, corsOrigin);
     }
@@ -113,6 +113,9 @@ export default {
         model,
         messages,
         max_tokens: Math.min(Number(max_tokens) || 220, MAX_TOKENS_CAP),
+        // Pass through reasoning control (e.g. {enabled:false} so the
+        // nano reasoning model spends its budget on the visible reply).
+        ...(reasoning && typeof reasoning === "object" ? { reasoning } : {}),
       }),
     });
 

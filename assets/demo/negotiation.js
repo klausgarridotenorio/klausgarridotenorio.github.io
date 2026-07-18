@@ -261,7 +261,7 @@
   // A visitor's own key takes precedence; otherwise the site proxy is used.
   const llmAvailable = () => Boolean(getKey() || PROXY_URL);
 
-  async function openrouter(model, messages, maxTokens) {
+  async function openrouter(model, messages, maxTokens, extra) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 25000);
     const useOwnKey = Boolean(getKey());
@@ -273,7 +273,9 @@
         method: "POST",
         signal: controller.signal,
         headers,
-        body: JSON.stringify({ model, messages, max_tokens: maxTokens || 220 }),
+        body: JSON.stringify({
+          model, messages, max_tokens: maxTokens || 220, ...(extra || {}),
+        }),
       });
       if (!res.ok) throw new Error("LLM endpoint " + res.status);
       const data = await res.json();
@@ -289,7 +291,7 @@
     try {
       const verdict = await openrouter(SAFETY_MODEL, [
         { role: "user", content: text },
-      ], 80);
+      ], 160);
       return { safe: !/unsafe/i.test(verdict), verdict };
     } catch {
       return { safe: true }; // guardrail unavailable → don't block the demo
@@ -313,7 +315,10 @@
       const messages = [{ role: "system", content: sys }]
         .concat(history.slice(-8))
         .concat([{ role: "user", content: "Write your reply now." }]);
-      const out = await openrouter(getModel(), messages);
+      // Reasoning disabled: the nano model otherwise spends the whole
+      // token budget thinking and returns an empty visible reply.
+      const out = await openrouter(getModel(), messages, 500,
+                                   { reasoning: { enabled: false } });
       if (!out) return scripted;
       if (mustContain && !out.includes(mustContain)) return scripted;
       return out;
