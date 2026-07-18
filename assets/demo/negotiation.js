@@ -33,7 +33,7 @@
   const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
   // Cloudflare Worker proxy (worker/ in this repo) holding the site's own
   // OpenRouter key, so visitors don't need one. Set after `wrangler deploy`.
-  const PROXY_URL = "";
+  const PROXY_URL = "https://negotiation-llm-proxy.kgtexperimentautochatbot.workers.dev";
   const KEY_STORAGE = "neg-demo-openrouter-key";
   const MODEL_STORAGE = "neg-demo-chat-model";
 
