@@ -27,7 +27,7 @@
 
   /* ── LLM settings (OpenRouter) ────────────────────────────────────── */
   // Chat generation: a free conversational model.
-  const DEFAULT_CHAT_MODEL = "google/gemma-4-31b-it:free";
+  const DEFAULT_CHAT_MODEL = "nvidia/nemotron-3-nano-30b-a3b:free";
   const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
   // Cloudflare Worker proxy (worker/ in this repo) holding the site's own
   // OpenRouter key, so visitors don't need one. Set after `wrangler deploy`.
@@ -183,7 +183,7 @@
 
   function optimalCounterOffer(evaluation, offer) {
     let price = null, quantity = null;
-    if (evaluation === EVAL.ACCEPT || evaluation === EVAL.INVALID_OFFER) {
+    if (evaluation === EVAL.ACCEPT) {
       return [null, null];
     } else if (evaluation === EVAL.OFFER_PRICE ||
                evaluation === EVAL.NOT_PROFITABLE_ON_QUANTITY) {
@@ -192,6 +192,7 @@
                evaluation === EVAL.NOT_PROFITABLE_ON_PRICE) {
       [price, quantity] = optimalWholesalePriceForQuantity(offer);
     } else {
+      // NOT_PROFITABLE_ON_BOTH, NOT_OFFER, INVALID_OFFER → Nash benchmark.
       [price, quantity] = nashBargainingSolution(CONSTRAINT_USER, CONSTRAINT_BOT).offer;
     }
     if (price == null || quantity == null) {
@@ -429,7 +430,6 @@
 
     const [cp, cq] = optimalCounterOffer(evaluation, offer);
     const scripted = scriptedResponse(evaluation, cp, cq);
-    const nonOffer = evaluation === EVAL.NOT_OFFER || evaluation === EVAL.INVALID_OFFER;
     const terms = cp != null && cq != null ? offerString(cp, cq) : null;
     const intent = {
       [EVAL.NOT_PROFITABLE_ON_BOTH]:
@@ -449,13 +449,16 @@
         `Their terms are outside the allowed ranges (price ${PRICE_MIN}-${PRICE_MAX}€, ` +
         `quantity ${QTY_MIN}-${QTY_MAX}); ask them to adjust, mentioning as reference `,
     }[evaluation] + (terms || "different terms") +
-      (nonOffer ? "." : ". Mention that you have placed this offer in the interface.");
+      ". Mention that you have placed this offer in the interface.";
 
     const text = await llmPhrase(intent, terms, scripted, history);
     setTyping(false);
     botSays(text);
 
-    if (!nonOffer && cp != null && cq != null) {
+    // Every set of terms the bot cites becomes its binding proposal in
+    // the interface — including the reference terms it gives for
+    // unreadable or out-of-range offers.
+    if (cp != null && cq != null) {
       offers.push(makeOffer(BOT_ID, cp, cq, false));
       refreshInterface();
     }
@@ -544,13 +547,12 @@
       el.textContent = `LLM chat active: ${getModel()}.`;
       el.className = "neg-status neg-status--on";
     } else {
-      el.textContent =
-        "Running with the experiment's scripted messages (no API key set). " +
-        "Add a free OpenRouter key under Settings to enable LLM-generated chat.";
+      el.textContent = "Running with the experiment's scripted messages.";
       el.className = "neg-status";
     }
   }
   window.saveSettings = function () {
+    if (!$("api-key")) return;
     const key = $("api-key").value.trim();
     const model = $("chat-model").value.trim();
     if (key) localStorage.setItem(KEY_STORAGE, key);
@@ -616,8 +618,8 @@
     chatInput.addEventListener("keydown", function (e) {
       if (e.key === "Enter") window.sendMessage();
     });
-    $("api-key").value = getKey();
-    $("chat-model").value = getModel();
+    if ($("api-key")) $("api-key").value = getKey();
+    if ($("chat-model")) $("chat-model").value = getModel();
     refreshLlmStatus();
     refreshInterface();
     greet();

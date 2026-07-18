@@ -15,7 +15,7 @@ const ALLOWED_ORIGINS = [
 ];
 
 const ALLOWED_MODELS = new Set([
-  "google/gemma-4-31b-it:free",
+  "nvidia/nemotron-3-nano-30b-a3b:free",
   "nvidia/nemotron-nano-9b-v2:free",
 ]);
 
