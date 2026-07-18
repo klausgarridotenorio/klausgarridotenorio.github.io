@@ -1,0 +1,7 @@
+name = "negotiation-llm-proxy"
+main = "src/index.js"
+compatibility_date = "2026-07-01"
+
+# The OpenRouter API key is NOT stored here (this file is committed).
+# Set it once as an encrypted secret:
+#   npx wrangler secret put OPENROUTER_API_KEY

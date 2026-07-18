@@ -31,6 +31,9 @@
   // Input moderation: NVIDIA's free content-safety guardrail model.
   const SAFETY_MODEL = "nvidia/nemotron-3.5-content-safety:free";
   const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
+  // Cloudflare Worker proxy (worker/ in this repo) holding the site's own
+  // OpenRouter key, so visitors don't need one. Set after `wrangler deploy`.
+  const PROXY_URL = "";
   const KEY_STORAGE = "neg-demo-openrouter-key";
   const MODEL_STORAGE = "neg-demo-chat-model";
 
@@ -255,21 +258,24 @@
   /* ── LLM layer (OpenRouter; falls back to scripted) ───────────────── */
   const getKey = () => localStorage.getItem(KEY_STORAGE) || "";
   const getModel = () => localStorage.getItem(MODEL_STORAGE) || DEFAULT_CHAT_MODEL;
+  // A visitor's own key takes precedence; otherwise the site proxy is used.
+  const llmAvailable = () => Boolean(getKey() || PROXY_URL);
 
   async function openrouter(model, messages, maxTokens) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 25000);
+    const useOwnKey = Boolean(getKey());
+    const url = useOwnKey ? OPENROUTER_URL : PROXY_URL;
+    const headers = { "Content-Type": "application/json" };
+    if (useOwnKey) headers.Authorization = "Bearer " + getKey();
     try {
-      const res = await fetch(OPENROUTER_URL, {
+      const res = await fetch(url, {
         method: "POST",
         signal: controller.signal,
-        headers: {
-          Authorization: "Bearer " + getKey(),
-          "Content-Type": "application/json",
-        },
+        headers,
         body: JSON.stringify({ model, messages, max_tokens: maxTokens || 220 }),
       });
-      if (!res.ok) throw new Error("OpenRouter " + res.status);
+      if (!res.ok) throw new Error("LLM endpoint " + res.status);
       const data = await res.json();
       return (data.choices?.[0]?.message?.content || "").trim();
     } finally {
@@ -279,7 +285,7 @@
 
   // Guardrail: NVIDIA content-safety model on the visitor's message.
   async function moderateInput(text) {
-    if (!getKey()) return { safe: true };
+    if (!llmAvailable()) return { safe: true };
     try {
       const verdict = await openrouter(SAFETY_MODEL, [
         { role: "user", content: text },
@@ -293,7 +299,7 @@
   // Phrase the rule-based decision with the chat LLM; validate that the
   // exact counter terms survived generation, else fall back to script.
   async function llmPhrase(intentDescription, mustContain, scripted, history) {
-    if (!getKey()) return scripted;
+    if (!llmAvailable()) return scripted;
     try {
       const sys =
         "You are the Retailer in a supply-chain wholesale negotiation demo " +
@@ -519,7 +525,10 @@
   function refreshLlmStatus() {
     const el = $("llm-status");
     if (getKey()) {
-      el.textContent = `LLM chat active: ${getModel()} + ${SAFETY_MODEL} guardrail (via OpenRouter).`;
+      el.textContent = `LLM chat active: ${getModel()} + ${SAFETY_MODEL} guardrail (via OpenRouter, your key).`;
+      el.className = "neg-status neg-status--on";
+    } else if (PROXY_URL) {
+      el.textContent = `LLM chat active: ${getModel()} + ${SAFETY_MODEL} guardrail.`;
       el.className = "neg-status neg-status--on";
     } else {
       el.textContent =
