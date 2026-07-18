@@ -15,7 +15,7 @@ const ALLOWED_ORIGINS = [
 ];
 
 const ALLOWED_MODELS = new Set([
-  "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+  "nvidia/nemotron-nano-9b-v2:free",
   "nvidia/nemotron-3.5-content-safety:free",
 ]);
 

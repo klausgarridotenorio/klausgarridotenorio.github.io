@@ -27,7 +27,7 @@
 
   /* ── LLM settings (OpenRouter) ────────────────────────────────────── */
   // Chat generation: a free conversational NVIDIA model.
-  const DEFAULT_CHAT_MODEL = "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free";
+  const DEFAULT_CHAT_MODEL = "nvidia/nemotron-nano-9b-v2:free";
   // Input moderation: NVIDIA's free content-safety guardrail model.
   const SAFETY_MODEL = "nvidia/nemotron-3.5-content-safety:free";
   const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
