@@ -26,10 +26,8 @@
   const BOT_ID = -1;
 
   /* ── LLM settings (OpenRouter) ────────────────────────────────────── */
-  // Chat generation: a free conversational NVIDIA model.
-  const DEFAULT_CHAT_MODEL = "nvidia/nemotron-nano-9b-v2:free";
-  // Input moderation: NVIDIA's free content-safety guardrail model.
-  const SAFETY_MODEL = "nvidia/nemotron-3.5-content-safety:free";
+  // Chat generation: a free conversational model.
+  const DEFAULT_CHAT_MODEL = "google/gemma-4-31b-it:free";
   const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
   // Cloudflare Worker proxy (worker/ in this repo) holding the site's own
   // OpenRouter key, so visitors don't need one. Set after `wrangler deploy`.
@@ -74,7 +72,8 @@
     return { idx, price, quantity, fromChat: !!fromChat, stamp: Date.now() };
   }
   const priceInRange = (p) =>
-    p != null && p >= PRICE_MIN && p <= PRICE_MAX && Math.round(p * 100) === p * 100;
+    p != null && p >= PRICE_MIN && p <= PRICE_MAX &&
+    Math.abs(p * 100 - Math.round(p * 100)) < 1e-6; // two decimals, float-safe
   const qtyInRange = (q) => q != null && Number.isInteger(q) && q >= QTY_MIN && q <= QTY_MAX;
   const isValid = (o) => priceInRange(o.price) && qtyInRange(o.quantity);
   const isComplete = (o) => o.price != null && o.quantity != null;
@@ -251,6 +250,24 @@
     } else if (numbers.length === 3) {
       price = Math.round(numbers[0] * 100) / 100;
       quantity = Math.trunc(numbers[2]);
+    } else if (numbers.length === 1) {
+      // Partial offer: a single number is read as a price or a quantity
+      // (the evaluator then answers with OFFER_PRICE / OFFER_QUANTITY,
+      // completing the missing term at the bot's target profit).
+      const n = numbers[0];
+      const saysQty = /\b(unit|units|quantity|pieces?|qty)\b/i.test(message);
+      const saysPrice = /(price|€|euro|eur\b|per unit)/i.test(message);
+      if (saysQty && !saysPrice) {
+        quantity = Math.trunc(n);
+      } else if (saysPrice && !saysQty) {
+        price = Math.round(n * 100) / 100;
+      } else if (n <= PRICE_MAX && !Number.isInteger(n)) {
+        price = Math.round(n * 100) / 100;
+      } else if (n <= PRICE_MAX) {
+        price = Math.round(n * 100) / 100;
+      } else {
+        quantity = Math.trunc(n);
+      }
     }
     return makeOffer(1, price, quantity, true);
   }
@@ -282,19 +299,6 @@
       return (data.choices?.[0]?.message?.content || "").trim();
     } finally {
       clearTimeout(timer);
-    }
-  }
-
-  // Guardrail: NVIDIA content-safety model on the visitor's message.
-  async function moderateInput(text) {
-    if (!llmAvailable()) return { safe: true };
-    try {
-      const verdict = await openrouter(SAFETY_MODEL, [
-        { role: "user", content: text },
-      ], 160);
-      return { safe: !/unsafe/i.test(verdict), verdict };
-    } catch {
-      return { safe: true }; // guardrail unavailable → don't block the demo
     }
   }
 
@@ -467,14 +471,6 @@
     addMessage("You (Supplier)", body);
     history.push({ role: "user", content: body });
 
-    const mod = await moderateInput(body);
-    if (!mod.safe) {
-      setTyping(false);
-      botSays("Let's keep this professional and focused on the negotiation, " +
-              "please. I'm happy to continue when you have an offer to discuss.");
-      busy = false;
-      return;
-    }
     const offer = interpretOfferFromChat(body);
     await respondTo(offer);
     busy = false;
@@ -486,6 +482,18 @@
     const quantity = parseInt($("myQuantity").value, 10);
     if (isNaN(price) || isNaN(quantity)) {
       addMessage("System", "Enter both a price and a quantity first.");
+      return;
+    }
+    // Hard bounds, as in the experiment: the interface refuses to send
+    // terms outside the allowed ranges.
+    if (price < PRICE_MIN || price > PRICE_MAX) {
+      addMessage("System",
+        `The wholesale price must be between ${PRICE_MIN} and ${PRICE_MAX}€.`);
+      return;
+    }
+    if (quantity < QTY_MIN || quantity > QTY_MAX) {
+      addMessage("System",
+        `The quantity must be between ${QTY_MIN} and ${QTY_MAX} units.`);
       return;
     }
     busy = true;
@@ -530,10 +538,10 @@
   function refreshLlmStatus() {
     const el = $("llm-status");
     if (getKey()) {
-      el.textContent = `LLM chat active: ${getModel()} + ${SAFETY_MODEL} guardrail (via OpenRouter, your key).`;
+      el.textContent = `LLM chat active: ${getModel()} (via OpenRouter, your key).`;
       el.className = "neg-status neg-status--on";
     } else if (PROXY_URL) {
-      el.textContent = `LLM chat active: ${getModel()} + ${SAFETY_MODEL} guardrail.`;
+      el.textContent = `LLM chat active: ${getModel()}.`;
       el.className = "neg-status neg-status--on";
     } else {
       el.textContent =
@@ -552,6 +560,48 @@
     refreshLlmStatus();
     $("settings-saved").hidden = false;
     setTimeout(() => { $("settings-saved").hidden = true; }, 2000);
+  };
+
+  /* ── Decision Support (port of the experiment's Profit Analysis tab) ── */
+
+  // Nash bargaining offer for an assumed Retail Price: the terms that give
+  // both parties the same expected profit.
+  window.dssNash = function () {
+    const rp = parseInt($("dss-rp").value, 10);
+    const out = $("dss-nash-result");
+    const nash = nashBargainingSolution(PRODUCTION_COST, rp);
+    const [p, q] = nash.offer;
+    out.textContent =
+      `If the Retail Price is ${rp}€: a Wholesale Price of ${p.toFixed(2)}€ ` +
+      `and ${q} units gives both parties the same expected profit of ` +
+      `${nash.profit.toFixed(2)}.`;
+  };
+
+  // Expected profits for a candidate offer, given an assumed Retail Price.
+  window.dssProfits = function () {
+    const p = parseFloat($("dss-price").value);
+    const q = parseInt($("dss-quantity").value, 10);
+    const rp = parseInt($("dss-rp2").value, 10);
+    const out = $("dss-profit-result");
+    if (isNaN(p) || isNaN(q)) {
+      out.textContent = "Enter both a wholesale price and a quantity.";
+      return;
+    }
+    if (p < PRICE_MIN || p > PRICE_MAX) {
+      out.textContent = `The wholesale price must be between ${PRICE_MIN} and ${PRICE_MAX}€.`;
+      return;
+    }
+    if (q < QTY_MIN || q > QTY_MAX) {
+      out.textContent = `The quantity must be between ${QTY_MIN} and ${QTY_MAX} units.`;
+      return;
+    }
+    const sp = profitSupplier(p, q, PRODUCTION_COST);
+    const rprof = profitRetailer(p, q, rp);
+    const es = expectedDemand(q);
+    out.textContent =
+      `Expected sales E[min(q, D)] = ${es.toFixed(2)} units. ` +
+      `Your expected profit (Supplier): ${sp.toFixed(2)}. ` +
+      `Retailer's expected profit if their RP is ${rp}€: ${rprof.toFixed(2)}.`;
   };
 
   /* ── Boot ─────────────────────────────────────────────────────────── */

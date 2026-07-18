@@ -15,8 +15,8 @@ const ALLOWED_ORIGINS = [
 ];
 
 const ALLOWED_MODELS = new Set([
+  "google/gemma-4-31b-it:free",
   "nvidia/nemotron-nano-9b-v2:free",
-  "nvidia/nemotron-3.5-content-safety:free",
 ]);
 
 const MAX_TOKENS_CAP = 600;
