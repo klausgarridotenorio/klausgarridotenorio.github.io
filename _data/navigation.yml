@@ -1,11 +1,13 @@
 # main links
 main:
   - title: "Research"
-    url: "#research"
+    url: "/#research"
+  - title: "Presentations"
+    url: "/#conference-presentations"
   - title: "Teaching"
-    url: "/teaching/"
+    url: "/#teaching"
   - title: "Awards"
-    url: "/awards/"
+    url: "/#awards"
   - title: "CV"
     url: "/files/Klaus_Garrido_Tenorio_CV.pdf"
     external: true

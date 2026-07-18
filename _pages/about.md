@@ -83,3 +83,78 @@ Airport Operations (Queue Jump) Passengers Boarding Before their Assigned Boardi
 - 2025 **Negotiation and Team Resources (NTR)** - AI Negotiation Think Tank 
 - 2025 **Department Operation Management - Information Systems - IE University** — Brownbag seminar
 - 2024 **Psychology of AI Lab - RSM** — Brownbag seminar
+
+## Teaching
+
+**Rotterdam School of Management, Erasmus University Rotterdam**
+
+<div class="teaching-course-list">
+  <section class="teaching-course">
+    <h3>Fundamental Models of Operations Management, <span class="teaching-course__meta">MSc Business Analytics &amp; Management, Fall 2024, 2025</span></h3>
+    <p>Teaching assistant — Designing and grading assignments + running group workshops.</p>
+  </section>
+
+  <section class="teaching-course">
+    <h3>Business Analytics and Decision Making, <span class="teaching-course__meta">Executive MBA, Spring 2024, 2025</span></h3>
+    <p>Teaching assistant — Handling Q&amp;A during workshops to translating analytics into managerial decision-making.</p>
+  </section>
+
+  <section class="teaching-course">
+    <h3>Behavioral Operations, <span class="teaching-course__meta">MSc Supply Chain Management, Spring 2025, 2026</span></h3>
+    <p>Teaching assistant — Lecturer + Examination support.</p>
+  </section>
+
+  <section class="teaching-course">
+    <h3>Thesis Coaching &amp; Co-Reading, <span class="teaching-course__meta">MSc SCM, BAM &amp; BIM, 2024–2026</span></h3>
+    <p>Coaching and co-reading master theses across Supply Chain Management, Business Analytics &amp; Management, and Business Information Management.</p>
+  </section>
+
+  <section class="teaching-course">
+    <h3>Internship Academic Supervision, <span class="teaching-course__meta">BSc IBA &amp; BSc BA, 2024–2026</span></h3>
+    <p>Academic supervisor for bachelor internship trajectories.</p>
+  </section>
+</div>
+
+**Rijksuniversiteit Groningen**
+
+<div class="teaching-course-list">
+  <section class="teaching-course">
+    <h3>International Business, <span class="teaching-course__meta">BSc Economics &amp; Business Economics, Winter 2021</span></h3>
+    <p>Teaching assistant.</p>
+  </section>
+
+  <section class="teaching-course">
+    <h3>Mentoring, <span class="teaching-course__meta">Winter 2021</span></h3>
+    <p>Mentor for study performance and academic attitude.</p>
+  </section>
+</div>
+
+**SGH Warsaw School of Economics**
+
+<div class="teaching-course-list">
+  <section class="teaching-course">
+    <h3>Future Supply Chains, <span class="teaching-course__meta">MSc Supply Chain Management; 2026</span></h3>
+    <p>Guest lecturer.</p>
+  </section>
+</div>
+
+## Awards
+
+- **DPW Awards (Judging Panel)**, 2025  
+  Procurement leaders evaluating startups shaping the future of procurement and supply chain
+
+- **Anton Dreesmann Award**, 2024  
+  Best retail thesis in the Netherlands, for "Forecasting Demand in Grocery Retail"
+
+- **Santander Technology Scholarship \| Digital Experience — IBM**, 2021
+
+- **2nd Place**, IBM–FC Groningen Digital Business Challenge, 2021
+
+### Summer Schools & Training
+
+- **Tinbergen Institute** — AI Agents
+- **Tinbergen Institute** — Deep Learning
+- **University of St. Gallen**, Global School in Empirical Research Methods — Generative AI with LLMs
+- **University of Oxford** — LLMs Workshop
+- **Universität Wien** — Behavioral Operations Research
+- **University of Wisconsin–Madison** — Behavioral Operations Management Summer Institute

@@ -43,7 +43,9 @@
 html,
 body {
   max-width: 100%;
-  overflow-x: hidden;
+  /* `clip` prevents horizontal scroll without creating a scroll container,
+     which would break the sticky masthead (unlike `hidden`) */
+  overflow-x: clip;
 }
 
 img,
