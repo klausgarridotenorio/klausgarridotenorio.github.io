@@ -365,31 +365,19 @@
   // still never move to the LLM.
   async function llmConverse(history) {
     if (!llmAvailable()) return null;
-    try {
-      const nash = nashBargainingSolution(CONSTRAINT_USER, CONSTRAINT_BOT);
-      const nashTerms = offerString(nash.offer[0], nash.offer[1]);
-      const sys =
-        "You are the Retailer in a supply-chain wholesale negotiation demo " +
-        "against a human Supplier. Their last message contains no concrete " +
-        "offer — it may be a question, a preference, or small talk. Answer " +
-        "it helpfully and honestly using ONLY the facts below. Do not make " +
-        "up numbers. If they ask you to make an offer, state exactly: " +
-        `"${nashTerms}" and say you have placed it in the interface. ` +
-        PHRASING_RULES + negotiationFacts();
-      const messages = [{ role: "system", content: sys }]
-        .concat(history.slice(-8))
-        .concat([{ role: "user", content: "Write your reply now." }]);
-      const raw = await openrouter(getModel(), messages, 500,
-                                   { reasoning: { enabled: false } });
-      if (!raw) return null;
-      const out = scrubReply(raw);
-      if (!out) return null;
-      const prev = [...history].reverse().find((m) => m.role === "assistant");
-      if (prev && out === prev.content.trim()) return null;
-      return { text: out, citesNash: out.includes(nashTerms), nash };
-    } catch {
-      return null;
-    }
+    const nash = nashBargainingSolution(CONSTRAINT_USER, CONSTRAINT_BOT);
+    const nashTerms = offerString(nash.offer[0], nash.offer[1]);
+    const sys =
+      "You are the Retailer in a supply-chain wholesale negotiation demo " +
+      "against a human Supplier. Their last message contains no concrete " +
+      "offer — it may be a question, a preference, or small talk. Answer " +
+      "it helpfully and honestly using ONLY the facts below. Do not make " +
+      "up numbers. If they ask you to make an offer, state exactly: " +
+      `"${nashTerms}" and say you have placed it in the interface. ` +
+      PHRASING_RULES + negotiationFacts();
+    const out = await generateValidated(sys, history, {});
+    if (!out) return null;
+    return { text: out, citesNash: out.includes(nashTerms), nash };
   }
 
   // Phrase the rule-based decision with the chat LLM; validate that the
@@ -397,40 +385,130 @@
   const REJECT_MARKER =
     /\b(no|not|isn'?t|don'?t|can'?t|cannot|won'?t|afraid|unfortunately|too (?:high|low|much|many|small|large)|exceeds?|above|below|outside|short|unable|however|instead)\b/i;
 
+  /* ── Validation wrapper (as in the LNCS paper) ─────────────────────────
+     A rule-based wrapper evaluates each LLM-generated message: every
+     tangible offer it cites must yield the bot an expected profit of at
+     least its (Nash-optimal) target. Failing drafts are regenerated up to
+     three times; after three unsuccessful attempts, the draft whose cited
+     offers carry the highest profit is sent. */
+
+  // Read tangible (price, quantity) offers out of a bot-authored message:
+  // a euro amount and a unit count with no other digits between them.
+  const OFFER_PAIRS = [
+    { re: /(\d+(?:[.,]\d+)?)\s*(?:€|euros?)\b[^0-9]{0,60}?(\d{1,3})\s*units?\b/gi,
+      order: "pq" },
+    { re: /(\d{1,3})\s*units?\b[^0-9]{0,60}?(\d+(?:[.,]\d+)?)\s*(?:€|euros?)/gi,
+      order: "qp" },
+  ];
+
+  function extractOffersFromText(text) {
+    const found = [];
+    for (const { re, order } of OFFER_PAIRS) {
+      re.lastIndex = 0;
+      let m;
+      while ((m = re.exec(text)) !== null) {
+        const a = parseFloat(m[1].replace(",", "."));
+        const b = parseFloat(m[2].replace(",", "."));
+        const [price, quantity] = order === "pq" ? [a, b] : [b, a];
+        found.push({ price: Math.round(price * 100) / 100,
+                     quantity: Math.trunc(quantity) });
+      }
+    }
+    return found;
+  }
+
+  // Profit score of a draft: the lowest bot profit among the offers it
+  // cites. A draft citing no tangible offer passes the profit check but
+  // ranks neutrally (at the target), so it never outranks a draft that
+  // correctly cites the rule-computed terms.
+  function draftProfitScore(text, target) {
+    const cited = extractOffersFromText(text);
+    if (!cited.length) return { score: target, worst: null, empty: true };
+    let score = Infinity, worst = null;
+    for (const o of cited) {
+      const p = isValid(o) ? profitRetailer(o.price, o.quantity, CONSTRAINT_BOT)
+                           : -Infinity;
+      if (p < score) { score = p; worst = o; }
+    }
+    return { score, worst, empty: false };
+  }
+
+  async function generateValidated(sys, history, opts) {
+    const target = nashBargainingSolution(CONSTRAINT_USER, CONSTRAINT_BOT).profit;
+    const prev = [...history].reverse().find((m) => m.role === "assistant");
+    let best = null;
+    let ask = "Write your reply now.";
+
+    for (let attempt = 0; attempt < 3; attempt++) {
+      let raw;
+      try {
+        const messages = [{ role: "system", content: sys }]
+          .concat(history.slice(-8))
+          .concat([{ role: "user", content: ask }]);
+        // Reasoning disabled: the nano model otherwise spends the whole
+        // token budget thinking and returns an empty visible reply.
+        raw = await openrouter(getModel(), messages, 500,
+                               { reasoning: { enabled: false } });
+      } catch {
+        continue;
+      }
+      const out = scrubReply(raw || "");
+      if (!out) continue;
+
+      const problems = [];
+      const hasMust = !opts.mustContain || out.includes(opts.mustContain);
+      if (!hasMust) {
+        problems.push(`it must state these exact terms verbatim: ${opts.mustContain}`);
+      }
+      if (opts.isReject && !REJECT_MARKER.test(out)) {
+        problems.push("it must explicitly decline the terms the Supplier proposed");
+      }
+      if (prev && out === prev.content.trim()) {
+        problems.push("it repeats your previous message verbatim");
+      }
+      const { score, worst } = draftProfitScore(out, target);
+      if (score < target) {
+        problems.push(
+          `it cites terms that fail your profitability requirement` +
+          (worst ? ` (${worst.price}€ / ${worst.quantity} units)` : "") +
+          `; cite no terms other than the required ones`);
+      }
+
+      if (!problems.length) return out;
+
+      // Only drafts that state the required terms are eligible to be sent
+      // as the "highest-profit unsuccessful draft".
+      if (hasMust && score > -Infinity &&
+          (best === null || score > best.score)) {
+        best = { text: out, score };
+      }
+      ask = "Your previous draft was rejected by the validation wrapper " +
+            "because " + problems.join("; and ") +
+            ". Write an improved reply now.";
+    }
+
+    // Three unsuccessful attempts: send the eligible draft whose cited
+    // offers carry the highest profit; otherwise the caller falls back to
+    // the scripted message.
+    return best ? best.text : null;
+  }
+
   async function llmPhrase(intentDescription, mustContain, scripted, history,
                            isReject) {
     if (!llmAvailable()) return scripted;
-    try {
-      const sys =
-        "You are the Retailer in a supply-chain wholesale negotiation demo " +
-        "against a human Supplier. A rule-based engine has already made " +
-        "your decision; your ONLY job is to phrase it. " + PHRASING_RULES +
-        (isReject
-          ? "Start by explicitly declining the terms they proposed (name " +
-            "their number), then give your counter. "
-          : "") +
-        "Decision to convey: " + intentDescription +
-        (mustContain ? " You MUST state these exact terms verbatim: " + mustContain + "." : "");
-      const messages = [{ role: "system", content: sys }]
-        .concat(history.slice(-8))
-        .concat([{ role: "user", content: "Write your reply now." }]);
-      // Reasoning disabled: the nano model otherwise spends the whole
-      // token budget thinking and returns an empty visible reply.
-      const raw = await openrouter(getModel(), messages, 500,
-                                   { reasoning: { enabled: false } });
-      if (!raw) return scripted;
-      const out = scrubReply(raw);
-      if (!out) return scripted;
-      // Post-generation validation: exact terms present, an actual
-      // rejection where one is due, and no verbatim self-repetition.
-      if (mustContain && !out.includes(mustContain)) return scripted;
-      if (isReject && !REJECT_MARKER.test(out)) return scripted;
-      const prev = [...history].reverse().find((m) => m.role === "assistant");
-      if (prev && out.trim() === prev.content.trim()) return scripted;
-      return out;
-    } catch {
-      return scripted;
-    }
+    const sys =
+      "You are the Retailer in a supply-chain wholesale negotiation demo " +
+      "against a human Supplier. A rule-based engine has already made " +
+      "your decision; your ONLY job is to phrase it. " + PHRASING_RULES +
+      (isReject
+        ? "Start by explicitly declining the terms they proposed (name " +
+          "their number), then give your counter. "
+        : "") +
+      "Do not propose or mention any price/quantity terms other than " +
+      "those in your decision. Decision to convey: " + intentDescription +
+      (mustContain ? " You MUST state these exact terms verbatim: " + mustContain + "." : "");
+    const out = await generateValidated(sys, history, { mustContain, isReject });
+    return out || scripted;
   }
 
   /* ── UI wiring ─────────────────────────────────────────────────────── */
@@ -509,7 +587,7 @@
           "ACCEPT the Supplier's chat offer of " + terms +
           "; tell them you have placed it in the interface as a binding " +
           "offer and they must click CONFIRM to finalize.",
-          null, scripted, history);
+          terms, scripted, history);
         setTyping(false);
         botSays(text);
         await sleep(BOT_ACCEPT_DELAY);
@@ -520,7 +598,7 @@
         const text = await llmPhrase(
           "ACCEPT the Supplier's binding offer of " + terms +
           " and announce you are finalizing the deal.",
-          null, scripted, history);
+          terms, scripted, history);
         setTyping(false);
         botSays(text);
         await sleep(BOT_ACCEPT_DELAY);

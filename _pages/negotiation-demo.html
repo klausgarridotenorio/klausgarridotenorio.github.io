@@ -191,11 +191,16 @@ author_profile: false
     a request to adjust.
   </div>
   <div class="neg-rule">
-    <strong>Division of labor</strong>
+    <strong>Division of labor &amp; validation</strong>
     These rules make every decision; the LLM only phrases the chat
-    messages. Each generated reply is validated to contain the exact
-    rule-computed terms before it is shown — otherwise a scripted message
-    is used. The LLM cannot accept, reject, or change an offer.
+    messages. Before a reply is shown, a rule-based validation wrapper
+    evaluates it: any tangible offer the message cites must yield the AI
+    an expected profit of at least its target, and decision messages must
+    state the rule-computed terms exactly. Replies that fail are
+    regenerated up to three times; after three unsuccessful attempts the
+    draft whose cited offers carry the highest profit is sent (or a
+    scripted message if none is usable). The LLM cannot accept, reject,
+    or change an offer.
   </div>
 </div>
 
