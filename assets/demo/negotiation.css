@@ -1,19 +1,114 @@
-/* Automated Negotiation Demo — styling adapted from the oTree
-   experiment's experiment.css (otree-chat block) to fit the site theme. */
+/* Automated Negotiation Demo — page styling.
+   The chat block (.neg-chat*) is kept exactly as the original oTree
+   experiment; everything around it uses the card system below. */
 
-.neg-banner {
-  border: 1px solid #d9e3ea;
-  background: #f2f7fa;
-  border-radius: 4px;
-  padding: 0.7em 1em;
-  font-size: 0.95em;
-  margin-bottom: 0.6em;
+:root {
+  --neg-ink: #2c3138;
+  --neg-muted: #6b7280;
+  --neg-line: #e3e7ec;
+  --neg-accent: #2f6690;
+  --neg-accent-dark: #24506f;
+  --neg-accent-soft: #eef4f8;
+  --neg-green: #2e7d4f;
+  --neg-green-soft: #edf7f0;
+  --neg-amber-soft: #fbf6ec;
+  --neg-card-bg: #ffffff;
+  --neg-radius: 10px;
+  --neg-shadow: 0 1px 2px rgba(20, 34, 48, 0.05), 0 4px 14px rgba(20, 34, 48, 0.06);
 }
 
-.neg-banner--muted {
-  background: #f6f6f6;
-  border-color: #e2e2e2;
+/* ── Cards & banners ─────────────────────────────────────────────────── */
+
+.neg-card {
+  background: var(--neg-card-bg);
+  border: 1px solid var(--neg-line);
+  border-radius: var(--neg-radius);
+  box-shadow: var(--neg-shadow);
+  padding: 1.25em 1.5em;
+  margin-bottom: 1.1em;
 }
+
+.neg-card--setting { border-left: 4px solid var(--neg-accent); }
+
+.neg-card--info {
+  border-left: 4px solid #c9a227;
+  background: var(--neg-amber-soft);
+  box-shadow: none;
+}
+
+.neg-card h4.neg-card__title {
+  margin: 0 0 0.5em;
+  font-size: 0.8em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--neg-accent);
+}
+
+.neg-card--info h4.neg-card__title { color: #9a7b1c; }
+
+.neg-formulas {
+  display: grid;
+  gap: 0.35em;
+  margin-top: 0.9em;
+  padding: 0.9em 1.1em;
+  background: var(--neg-accent-soft);
+  border-radius: 8px;
+  font-size: 0.97em;
+}
+
+.neg-formulas .neg-formula__label {
+  display: inline-block;
+  min-width: 72px;
+  font-weight: 600;
+  color: var(--neg-accent-dark);
+}
+
+/* ── Status pill ─────────────────────────────────────────────────────── */
+
+.neg-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 0.82em;
+  color: var(--neg-muted);
+  background: #f5f6f8;
+  border: 1px solid var(--neg-line);
+  border-radius: 999px;
+  padding: 0.35em 1em;
+  margin-bottom: 1.2em;
+}
+
+.neg-status::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #b6bcc6;
+  flex: none;
+}
+
+.neg-status--on {
+  color: var(--neg-green);
+  background: var(--neg-green-soft);
+  border-color: #cfe7d8;
+}
+
+.neg-status--on::before { background: var(--neg-green); }
+
+/* ── Section headings ────────────────────────────────────────────────── */
+
+.neg-section-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6em;
+  margin: 1.6em 0 0.6em;
+}
+
+.neg-section-title h3 { margin: 0; }
+
+.neg-section-title .neg-note { margin: 0; }
+
+/* ── Chat (UNCHANGED — mirrors the oTree experiment) ─────────────────── */
 
 .neg-chat {
   border: 1px solid #ccc;
@@ -73,7 +168,7 @@
   border-radius: 3px;
 }
 
-.neg-btn {
+.neg-chat .neg-btn {
   background: #2f6690;
   border: 1px solid #2f6690;
   color: #fff;
@@ -83,86 +178,270 @@
   font-size: 0.92em;
 }
 
-.neg-btn:hover:not(:disabled) { opacity: 0.88; }
+.neg-chat .neg-btn:hover:not(:disabled) { opacity: 0.88; }
 
-.neg-btn:disabled { opacity: 0.45; cursor: default; }
+/* ── Buttons (outside the chat) ──────────────────────────────────────── */
+
+.neg-btn {
+  background: var(--neg-accent);
+  border: 1px solid var(--neg-accent);
+  color: #fff;
+  border-radius: 7px;
+  padding: 0.5em 1.25em;
+  cursor: pointer;
+  font-size: 0.92em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background 0.15s ease, transform 0.05s ease;
+}
+
+.neg-btn:hover:not(:disabled) { background: var(--neg-accent-dark); }
+
+.neg-btn:active:not(:disabled) { transform: translateY(1px); }
+
+.neg-btn:disabled { opacity: 0.4; cursor: default; }
+
+.neg-btn--confirm {
+  background: var(--neg-green);
+  border-color: var(--neg-green);
+}
+
+.neg-btn--confirm:hover:not(:disabled) { background: #256841; }
 
 .neg-btn--ghost {
   background: transparent;
-  color: #2f6690;
+  color: var(--neg-accent);
+}
+
+.neg-btn--ghost:hover:not(:disabled) {
+  background: var(--neg-accent-soft);
+  color: var(--neg-accent-dark);
+}
+
+/* ── Offer interface ─────────────────────────────────────────────────── */
+
+.neg-interface {
+  padding: 0;
+  overflow: hidden;
 }
 
 .neg-table {
   width: 100%;
-  border: 1px solid #444;
   border-collapse: collapse;
-  margin-bottom: 1.2em;
   font-size: 0.95em;
+  margin: 0;
 }
+
+.neg-table tr + tr td,
+.neg-table tr + tr th { border-top: 1px solid var(--neg-line); }
 
 .neg-table th,
 .neg-table td {
-  border-top: 1px solid #ddd;
-  padding: 0.7em 0.8em;
+  padding: 1.1em 1.2em;
   vertical-align: middle;
+  text-align: left;
 }
 
-.neg-table th { width: 200px; text-align: left; }
+.neg-table th {
+  width: 190px;
+  font-size: 0.78em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--neg-muted);
+  background: #fafbfc;
+  border-right: 1px solid var(--neg-line);
+}
+
+.neg-table .neg-dims {
+  font-size: 0.8em;
+  color: var(--neg-muted);
+  line-height: 2.1;
+  width: 80px;
+}
+
+.neg-proposal {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 1.06em;
+  line-height: 2;
+  color: var(--neg-ink);
+  min-width: 90px;
+}
 
 .neg-table input {
-  width: 110px;
-  padding: 0.35em 0.5em;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  width: 130px;
+  padding: 0.5em 0.7em;
+  border: 1px solid #cdd4dc;
+  border-radius: 7px;
   display: block;
   margin-bottom: 8px;
+  font-size: 0.95em;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.neg-status {
-  font-size: 0.85em;
-  color: #767676;
-  margin-bottom: 1em;
+.neg-table input:focus,
+.neg-dss input:focus,
+.neg-settings input:focus,
+.neg-dss select:focus {
+  outline: none;
+  border-color: var(--neg-accent);
+  box-shadow: 0 0 0 3px rgba(47, 102, 144, 0.15);
 }
 
-.neg-status--on { color: #2e6b46; }
+/* ── Deal panel ──────────────────────────────────────────────────────── */
 
 .neg-deal {
-  border: 1px solid #2e6b46;
-  background: #f0f7f2;
-  border-radius: 4px;
-  padding: 1em 1.2em;
-  margin: 1em 0;
+  border: 1px solid #cfe7d8;
+  border-left: 4px solid var(--neg-green);
+  background: var(--neg-green-soft);
+  border-radius: var(--neg-radius);
+  box-shadow: var(--neg-shadow);
+  padding: 1.4em 1.6em;
+  margin: 1.2em 0;
 }
 
-.neg-deal h4 { margin-top: 0; }
+.neg-deal h4 {
+  margin: 0 0 0.5em;
+  color: var(--neg-green);
+  font-size: 1.15em;
+}
+
+.neg-deal #deal-terms {
+  font-weight: 700;
+  font-size: 1.05em;
+  margin: 0.2em 0;
+}
+
+.neg-deal #deal-profit { color: #3c5947; margin: 0.3em 0 1em; }
+
+/* ── Decision Support ────────────────────────────────────────────────── */
+
+.neg-dss-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1em;
+  margin-bottom: 1.1em;
+}
+
+.neg-dss {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55em;
+}
+
+.neg-dss p { margin: 0; }
+
+.neg-dss label {
+  font-size: 0.78em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--neg-muted);
+  font-weight: 600;
+  margin-top: 0.3em;
+}
+
+.neg-dss input,
+.neg-dss select {
+  width: 100%;
+  max-width: 220px;
+  padding: 0.5em 0.7em;
+  border: 1px solid #cdd4dc;
+  border-radius: 7px;
+  font-size: 0.95em;
+  background: #fff;
+}
+
+.neg-dss .neg-btn { align-self: flex-start; margin-top: 0.5em; }
+
+.neg-dss-result {
+  font-size: 0.92em;
+  color: var(--neg-ink);
+  background: var(--neg-accent-soft);
+  border-radius: 8px;
+  padding: 0.8em 1em;
+  min-height: 1em;
+}
+
+.neg-dss-result:empty { display: none; }
+
+/* ── Settings ────────────────────────────────────────────────────────── */
 
 .neg-settings {
-  border: 1px solid #e2e2e2;
-  border-radius: 4px;
-  padding: 0.8em 1.1em;
-  margin: 1.6em 0;
+  border: 1px solid var(--neg-line);
+  border-radius: var(--neg-radius);
+  padding: 1em 1.4em;
+  margin: 1.4em 0;
   font-size: 0.92em;
+  background: #fafbfc;
 }
 
-.neg-settings summary { cursor: pointer; font-weight: 700; }
+.neg-settings summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--neg-muted);
+}
+
+.neg-settings summary:hover { color: var(--neg-ink); }
 
 .neg-settings label {
   display: block;
-  margin: 0.8em 0 0.2em;
-  font-weight: 700;
+  margin: 0.9em 0 0.25em;
+  font-weight: 600;
+  font-size: 0.85em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--neg-muted);
 }
 
 .neg-settings input {
   width: 100%;
   max-width: 460px;
-  padding: 0.4em 0.6em;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  padding: 0.5em 0.7em;
+  border: 1px solid #cdd4dc;
+  border-radius: 7px;
 }
 
-.neg-settings .neg-btn { margin-top: 0.9em; }
+.neg-settings .neg-btn { margin-top: 1em; }
+
+#settings-saved { color: var(--neg-green); margin-left: 0.6em; }
+
+/* ── Transparency ────────────────────────────────────────────────────── */
+
+.neg-rules {
+  font-size: 0.93em;
+  color: var(--neg-ink);
+}
+
+.neg-rules .neg-rule {
+  padding: 0.9em 0;
+}
+
+.neg-rules .neg-rule + .neg-rule { border-top: 1px dashed var(--neg-line); }
+
+.neg-rules .neg-rule strong:first-child {
+  display: block;
+  color: var(--neg-accent-dark);
+  margin-bottom: 0.25em;
+}
+
+.neg-rules ul { margin: 0.4em 0 0; padding-left: 1.3em; }
+
+.neg-rules li { margin-bottom: 0.35em; }
+
+/* ── Misc ────────────────────────────────────────────────────────────── */
 
 .neg-note {
   font-size: 0.85em;
-  color: #767676;
+  color: var(--neg-muted);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────── */
+
+@media (max-width: 760px) {
+  .neg-dss-grid { grid-template-columns: 1fr; }
+
+  .neg-table th { width: 110px; }
+
+  .neg-table th,
+  .neg-table td { padding: 0.8em 0.7em; }
 }

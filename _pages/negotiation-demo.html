@@ -20,21 +20,25 @@ author_profile: false
   on this page.
 </p>
 
-<div class="neg-banner">
-  <strong>The setting.</strong> You negotiate a wholesale contract: a
-  wholesale price <em>w</em> (between 1–5€) and an order quantity
-  <em>q</em> (between 1–100 units). The <strong>Production Cost is
-  PC&nbsp;=&nbsp;1.00€</strong> per unit (common knowledge). Demand
-  <em>D</em> is uniform on [0,&nbsp;100]. As the Supplier
-  <strong>you carry the inventory risk</strong>: you produce the full
-  quantity <em>q</em> up front, but only the units that meet demand,
-  min(<em>q</em>,&nbsp;<em>D</em>), are paid for.
-  <br><br>
-  <strong>Expected profits</strong> (as introduced in the experiment):<br>
-  &nbsp;&nbsp;Supplier:&nbsp; <em>π<sub>S</sub> = w · E[min(q, D)] − PC · q</em><br>
-  &nbsp;&nbsp;Retailer:&nbsp; <em>π<sub>R</sub> = (RP − w) · E[min(q, D)]</em>
+<div class="neg-card neg-card--setting">
+  <h4 class="neg-card__title">The setting</h4>
+  You negotiate a wholesale contract: a wholesale price <em>w</em>
+  (between 1–5€) and an order quantity <em>q</em> (between 1–100 units).
+  The <strong>Production Cost is PC&nbsp;=&nbsp;1.00€</strong> per unit
+  (common knowledge). Demand <em>D</em> is uniform on [0,&nbsp;100]. As
+  the Supplier <strong>you carry the inventory risk</strong>: you produce
+  the full quantity <em>q</em> up front, but only the units that meet
+  demand, min(<em>q</em>,&nbsp;<em>D</em>), are paid for.
+  <div class="neg-formulas">
+    <div><span class="neg-formula__label">Supplier</span>
+      <em>π<sub>S</sub> = w · E[min(q, D)] − PC · q</em></div>
+    <div><span class="neg-formula__label">Retailer</span>
+      <em>π<sub>R</sub> = (RP − w) · E[min(q, D)]</em></div>
+  </div>
 </div>
-<div class="neg-banner neg-banner--muted">
+
+<div class="neg-card neg-card--info">
+  <h4 class="neg-card__title">Private information</h4>
   The Retail Price (RP) is the Retailer's private information: it can be
   <strong>4€ or 5€</strong>, and the AI counterpart is
   <strong>not disclosing</strong> it. (For this demo: the AI has been
@@ -55,42 +59,43 @@ author_profile: false
   </div>
 </div>
 
-<h3>Interface</h3>
-<p class="neg-note">
-  Every offer the AI makes appears below as the counterpart's proposal.
-  The interface only accepts prices between 1–5€ and quantities between
-  1–100 units.
-</p>
-<table class="neg-table">
-  <tr>
-    <th>Retailer proposal</th>
-    <td>Price<br>Quantity</td>
-    <td id="otherProposal">(none)<br>&nbsp;</td>
-    <td></td>
-    <td>
-      <button type="button" id="btnAccept" onclick="sendAccept()"
-              class="neg-btn" disabled>
-        CONFIRM
-      </button>
-    </td>
-  </tr>
-  <tr>
-    <th>Your current proposal</th>
-    <td>Price<br>Quantity</td>
-    <td id="myProposal">(none)<br>&nbsp;</td>
-    <td>
-      <input type="number" id="myPrice" placeholder="Enter price"
-             min="1" max="5" step="0.01">
-      <input type="number" id="myQuantity" placeholder="Enter quantity"
-             min="1" max="100" step="1">
-    </td>
-    <td>
-      <button type="button" onclick="sendOffer()" id="btn-offer" class="neg-btn">
-        Send new offer
-      </button>
-    </td>
-  </tr>
-</table>
+<div class="neg-section-title">
+  <h3>Interface</h3>
+  <span class="neg-note">binding offers · prices 1–5€ · quantities 1–100
+  units · the AI's offers appear here as the counterpart's proposal</span>
+</div>
+<div class="neg-card neg-interface">
+  <table class="neg-table">
+    <tr>
+      <th>Retailer proposal</th>
+      <td class="neg-dims">Price<br>Quantity</td>
+      <td class="neg-proposal" id="otherProposal">(none)<br>&nbsp;</td>
+      <td></td>
+      <td>
+        <button type="button" id="btnAccept" onclick="sendAccept()"
+                class="neg-btn neg-btn--confirm" disabled>
+          CONFIRM
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <th>Your current proposal</th>
+      <td class="neg-dims">Price<br>Quantity</td>
+      <td class="neg-proposal" id="myProposal">(none)<br>&nbsp;</td>
+      <td>
+        <input type="number" id="myPrice" placeholder="Enter price"
+               min="1" max="5" step="0.01">
+        <input type="number" id="myQuantity" placeholder="Enter quantity"
+               min="1" max="100" step="1">
+      </td>
+      <td>
+        <button type="button" onclick="sendOffer()" id="btn-offer" class="neg-btn">
+          Send new offer
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>
 
 <div class="neg-deal" id="deal-panel" hidden>
   <h4>🤝 Deal reached</h4>
@@ -101,40 +106,43 @@ author_profile: false
   </button>
 </div>
 
-<h3>Decision Support Tool</h3>
-<p class="neg-note">
-  The same profit calculators the Supplier had on the experiment's
-  "Profit Analysis" tab.
-</p>
+<div class="neg-section-title">
+  <h3>Decision Support Tool</h3>
+  <span class="neg-note">the calculators from the experiment's "Profit
+  Analysis" tab</span>
+</div>
 
-<div class="neg-settings" style="margin-top:0;">
-  <p><strong>Even-split offer.</strong> Pick the Retail Price you believe
-  the Retailer has; get the offer that gives both parties the same
-  expected profit (the Nash bargaining benchmark).</p>
-  <label for="dss-rp">Assumed Retail Price</label>
-  <select id="dss-rp" class="neg-note">
-    <option value="4">4€</option>
-    <option value="5">5€</option>
-  </select>
-  <button type="button" class="neg-btn" onclick="dssNash()">Compute</button>
-  <p id="dss-nash-result" class="neg-note"></p>
+<div class="neg-dss-grid">
+  <div class="neg-card neg-dss">
+    <h4 class="neg-card__title">Even-split offer</h4>
+    <p>Pick the Retail Price you believe the Retailer has; get the offer
+    that gives both parties the same expected profit (the Nash bargaining
+    benchmark).</p>
+    <label for="dss-rp">Assumed Retail Price</label>
+    <select id="dss-rp">
+      <option value="4">4€</option>
+      <option value="5">5€</option>
+    </select>
+    <button type="button" class="neg-btn" onclick="dssNash()">Compute</button>
+    <p id="dss-nash-result" class="neg-dss-result"></p>
+  </div>
 
-  <hr>
-
-  <p><strong>Evaluate an offer.</strong> Enter any wholesale price
-  (1–5€) and quantity (1–100) to pre-calculate the expected profits
-  before you send it.</p>
-  <label for="dss-price">Wholesale price (€)</label>
-  <input type="number" id="dss-price" min="1" max="5" step="0.01">
-  <label for="dss-quantity">Quantity (units)</label>
-  <input type="number" id="dss-quantity" min="1" max="100" step="1">
-  <label for="dss-rp2">Assumed Retail Price</label>
-  <select id="dss-rp2" class="neg-note">
-    <option value="4">4€</option>
-    <option value="5">5€</option>
-  </select>
-  <button type="button" class="neg-btn" onclick="dssProfits()">Calculate profits</button>
-  <p id="dss-profit-result" class="neg-note"></p>
+  <div class="neg-card neg-dss">
+    <h4 class="neg-card__title">Evaluate an offer</h4>
+    <p>Enter any wholesale price (1–5€) and quantity (1–100) to
+    pre-calculate the expected profits before you send it.</p>
+    <label for="dss-price">Wholesale price (€)</label>
+    <input type="number" id="dss-price" min="1" max="5" step="0.01">
+    <label for="dss-quantity">Quantity (units)</label>
+    <input type="number" id="dss-quantity" min="1" max="100" step="1">
+    <label for="dss-rp2">Assumed Retail Price</label>
+    <select id="dss-rp2">
+      <option value="4">4€</option>
+      <option value="5">5€</option>
+    </select>
+    <button type="button" class="neg-btn" onclick="dssProfits()">Calculate profits</button>
+    <p id="dss-profit-result" class="neg-dss-result"></p>
+  </div>
 </div>
 
 <details class="neg-settings">
@@ -158,49 +166,59 @@ author_profile: false
   <span id="settings-saved" hidden>✓ Saved</span>
 </details>
 
-<h3>How the AI decides (transparency)</h3>
-<p class="neg-note">
-  Shown here for transparency — participants in the actual experiment do
-  not see this.
-</p>
-<div class="neg-banner neg-banner--muted" style="font-size:0.92em;">
-  <p><strong>Benchmark.</strong> The AI negotiates toward the Nash
-  bargaining solution computed from its (undisclosed) Retail Price of 4€
-  and the common-knowledge Production Cost of 1€: a wholesale price of
-  2.80€ and 75 units, worth an expected profit of 56.25 to each side.
-  That profit is its <em>target</em>.</p>
-
-  <p><strong>Acceptance rule.</strong> It accepts any offer — from chat or
-  the interface — whose expected Retailer profit,
-  (RP − w) · E[min(q, D)], is at least the target of 56.25. Accepted chat
-  offers are re-posted in the interface as a binding offer for you to
-  CONFIRM; accepted interface offers close the deal directly.</p>
-
-  <p><strong>Counter-offer rules.</strong> If your offer falls short, the
-  AI diagnoses why and counters — and every counter-offer it makes is
-  placed in the interface as its binding proposal:</p>
-  <ul>
-    <li><em>Price too high (quantity workable):</em> it keeps your
-    quantity and offers the highest wholesale price that still reaches its
-    target profit.</li>
-    <li><em>Quantity unworkable at your price:</em> it keeps your price
-    and offers the quantity that reaches its target while maximizing
-    <em>your</em> expected profit.</li>
-    <li><em>Both unworkable, or no readable offer:</em> it proposes the
-    Nash benchmark offer itself (2.80€, 75 units).</li>
-  </ul>
-
-  <p><strong>Partial offers.</strong> If your chat message names only a
-  wholesale price, the AI completes it with the profit-maximizing quantity
-  that meets its target; if it names only a quantity, the AI completes it
-  with the corresponding price. Terms outside the allowed ranges
-  (1–5€, 1–100 units) are rejected with a request to adjust.</p>
-
-  <p><strong>Division of labor.</strong> These rules make every decision;
-  the LLM only phrases the chat messages. Each generated reply is
-  validated to contain the exact rule-computed terms before it is shown —
-  otherwise a scripted message is used. The LLM cannot accept, reject, or
-  change an offer.</p>
+<div class="neg-section-title">
+  <h3>How the AI decides</h3>
+  <span class="neg-note">shown for transparency — participants in the
+  actual experiment do not see this</span>
+</div>
+<div class="neg-card neg-rules">
+  <div class="neg-rule">
+    <strong>Benchmark</strong>
+    The AI negotiates toward the Nash bargaining solution computed from
+    its (undisclosed) Retail Price of 4€ and the common-knowledge
+    Production Cost of 1€: a wholesale price of 2.80€ and 75 units, worth
+    an expected profit of 56.25 to each side. That profit is its
+    <em>target</em>.
+  </div>
+  <div class="neg-rule">
+    <strong>Acceptance rule</strong>
+    It accepts any offer — from chat or the interface — whose expected
+    Retailer profit, (RP − w) · E[min(q, D)], is at least the target of
+    56.25. Accepted chat offers are re-posted in the interface as a
+    binding offer for you to CONFIRM; accepted interface offers close the
+    deal directly.
+  </div>
+  <div class="neg-rule">
+    <strong>Counter-offer rules</strong>
+    If your offer falls short, the AI diagnoses why and counters — and
+    every counter-offer it makes is placed in the interface as its binding
+    proposal:
+    <ul>
+      <li><em>Price too high (quantity workable):</em> it keeps your
+      quantity and offers the highest wholesale price that still reaches
+      its target profit.</li>
+      <li><em>Quantity unworkable at your price:</em> it keeps your price
+      and offers the quantity that reaches its target while maximizing
+      <em>your</em> expected profit.</li>
+      <li><em>Both unworkable, or no readable offer:</em> it proposes the
+      Nash benchmark offer itself (2.80€, 75 units).</li>
+    </ul>
+  </div>
+  <div class="neg-rule">
+    <strong>Partial offers</strong>
+    If your chat message names only a wholesale price, the AI completes it
+    with the profit-maximizing quantity that meets its target; if it names
+    only a quantity, the AI completes it with the corresponding price.
+    Terms outside the allowed ranges (1–5€, 1–100 units) are rejected with
+    a request to adjust.
+  </div>
+  <div class="neg-rule">
+    <strong>Division of labor</strong>
+    These rules make every decision; the LLM only phrases the chat
+    messages. Each generated reply is validated to contain the exact
+    rule-computed terms before it is shown — otherwise a scripted message
+    is used. The LLM cannot accept, reject, or change an offer.
+  </div>
 </div>
 
 <script src="/assets/demo/negotiation.js"></script>
