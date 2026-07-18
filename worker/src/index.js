@@ -23,22 +23,30 @@ const MAX_TOKENS_CAP = 600;
 const MAX_MESSAGES = 24;
 const MAX_BODY_CHARS = 12000;
 
-// Best-effort rate limit: 30 requests/minute per IP (resets when the
-// isolate is recycled; good enough to blunt casual abuse on a demo).
+// Best-effort rate limits per IP: 30 requests/minute and 150/day
+// (in-memory; reset when the isolate is recycled — good enough to blunt
+// casual abuse and free-riding on a demo).
 const hits = new Map();
 const RATE_LIMIT = 30;
 const WINDOW_MS = 60_000;
+const DAILY_LIMIT = 150;
+const DAY_MS = 86_400_000;
 
 function rateLimited(ip) {
   const now = Date.now();
-  const rec = hits.get(ip) || { count: 0, start: now };
+  const rec = hits.get(ip) || { count: 0, start: now, dayCount: 0, dayStart: now };
   if (now - rec.start > WINDOW_MS) {
     rec.count = 0;
     rec.start = now;
   }
+  if (now - rec.dayStart > DAY_MS) {
+    rec.dayCount = 0;
+    rec.dayStart = now;
+  }
   rec.count += 1;
+  rec.dayCount += 1;
   hits.set(ip, rec);
-  return rec.count > RATE_LIMIT;
+  return rec.count > RATE_LIMIT || rec.dayCount > DAILY_LIMIT;
 }
 
 function corsHeaders(origin) {
