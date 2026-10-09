@@ -9,18 +9,23 @@ author_profile: true
 
 <div class="teaching-course-list">
   <section class="teaching-course">
+    <h3>Research Methods, <span class="teaching-course__meta">MSc Supply Chain Management, Fall 2026</span></h3>
+    <p>Teaching assistant — Single lecture.</p>
+  </section>
+
+  <section class="teaching-course">
     <h3>Fundamental Models of Operations Management, <span class="teaching-course__meta">MSc Business Analytics &amp; Management, Fall 2024, 2025</span></h3>
     <p>Teaching assistant — Designing and grading assignments + running group workshops.</p>
   </section>
 
   <section class="teaching-course">
     <h3>Business Analytics and Decision Making, <span class="teaching-course__meta">Executive MBA, Spring 2024, 2025</span></h3>
-    <p>Teaching assistant — Handling Q&A during workshops to translating analytics into managerial decision-making.</p>
+    <p>Teaching assistant — Handling Q&amp;A during workshops to translating analytics into managerial decision-making.</p>
   </section>
 
   <section class="teaching-course">
     <h3>Behavioral Operations, <span class="teaching-course__meta">MSc Supply Chain Management, Spring 2025, 2026</span></h3>
-    <p>Teaching assistant — Lecturer + Examination support.</p>
+    <p>Teaching assistant — Single lecture + Examination support.</p>
   </section>
 
   <section class="teaching-course">
@@ -31,6 +36,15 @@ author_profile: true
   <section class="teaching-course">
     <h3>Internship Academic Supervision, <span class="teaching-course__meta">BSc IBA &amp; BSc BA, 2024–2026</span></h3>
     <p>Academic supervisor for bachelor internship trajectories.</p>
+  </section>
+</div>
+
+## SGH Warsaw School of Economics
+
+<div class="teaching-course-list">
+  <section class="teaching-course">
+    <h3>Future Supply Chains, <span class="teaching-course__meta">MSc Supply Chain Management, Spring 2026</span></h3>
+    <p>Guest lecturer (online).</p>
   </section>
 </div>
 
@@ -45,14 +59,5 @@ author_profile: true
   <section class="teaching-course">
     <h3>Mentoring, <span class="teaching-course__meta">Winter 2021</span></h3>
     <p>Mentor for study performance and academic attitude.</p>
-  </section>
-</div>
-
-## SGH Warsaw School of Economics
-
-<div class="teaching-course-list">
-  <section class="teaching-course">
-    <h3>Future Supply Chains, <span class="teaching-course__meta"> MSc Supply Chain Management; 2026</span></h3>
-    <p>Guest lecturer.</p>
   </section>
 </div>

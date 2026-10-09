@@ -21,7 +21,13 @@ Conduct Behavioral Lab Experiments with Hybrid Chatbots (LLM &amp; Rule-based) a
 
 Airport Operations (Queue Jump) Passengers Boarding Before their Assigned Boarding Group.
 
+**Research Interests**
+
+Machine Customers, Behavioral Experiments, Decision Support Systems, Conversational Agents, Human-Bot Negotiations, Delegation to Virtual Agents, Human-Computer Interaction.
+
 ## Research
+
+### Working Papers
 
 <div class="research-list">
   <section class="research-item">
@@ -43,10 +49,14 @@ Airport Operations (Queue Jump) Passengers Boarding Before their Assigned Boardi
   </section>
 
   <section class="research-item">
-    <h3><strong>Out-of-Line: Field Evidence of Passenger Queue Jumping Behavior in Aircraft Boarding</strong></h3>
+    <h3><strong>Out-of-Line: Experimental Evidence of Passenger Queue Jumping Behavior in Aircraft Boarding</strong></h3>
     <p class="research-authors">Klaus Garrido Tenorio, Monika Westphal, Chantale Köster</p>
   </section>
+</div>
 
+### Short Papers
+
+<div class="research-list">
   <section class="research-item">
     <h3><strong>Hybrid (Rule-based + Gen AI) Chatbot: Automating Negotiations</strong></h3>
     <p class="research-authors">Klaus Garrido Tenorio, Michael Becker-Peth, and Jelle de Vries</p>
@@ -62,33 +72,87 @@ Airport Operations (Queue Jump) Passengers Boarding Before their Assigned Boardi
       <p>This paper proposes a hybrid framework combining rule-based systems with Large Language Models (LLMs) for automated supply chain negotiations. Building on successful industry implementations of rule-based negotiation bots and addressing vulnerabilities identified in MIT's 2025 LLM negotiation competition, the approach leverages game-theoretic principles while utilizing LLMs for natural language tasks. The natural language tasks include Constraint and Offer Interpreters, and Message Generation. In a nutshell: 1) prompt the LLM with game-theoretic offers; 2) check if the generated message is profitable enough. A rule-based wrapper ensures Pareto-efficient outcomes by validating LLM outputs post-generation before sending them to the counterpart. Although designed for procurement negotiations, researchers and practitioners can apply this framework to various negotiation contexts. It is entirely developed in Python, a widely-used open-source programming language. (https://doi.org/10.1007/978-3-032-26717-7_24)</p>
     </div>
   </section>
+
+  <section class="research-item">
+    <h3><strong>Agentic LLM Negotiator vs Hybrid Chatbot</strong></h3>
+    <p class="paper-status"><em>Short paper</em></p>
+  </section>
 </div>
 
-## Conference Presentations
+### Research Visit
 
-- **INFORMS 2026** — Invited BOM session presentation (1st &amp; 2nd working paper)
-- **POMS 2026** — Production and Operations Management Society Annual Conference (Airport Operations paper)
-- **Behavioral Operations Conference — Young Scholars**, 2025 &amp; 2026 (1st &amp; 2nd working paper)
-- **CEMS Research Seminar on Supply Chain Management**, Riezlern, Austria, 2025 &amp; 2026 
-- **INFORMS 2025** — Invited BOM session presentation (1st working paper)
-- **CONVERSATIONS 2025** — Chatbots and Human-Centered AI (Technical Paper)
-- **MSOM 2025** — Manufacturing &amp; Service Operations Management (1st working paper)
-- **IPSERA Doctoral Workshop 2025**, Rotterdam, The Netherlands (1st working paper)
+- **UT Dallas, Naveen Jindal School of Management**, Nov–Dec 2026 — hosted by Prof. Kyle Hyndman
 
-## Seminar Presentations
+## Presentations
 
-- 2026 **Department Information Systems and Operations Management - Tilburg University** — External seminar
-- 2026 **Department of Technology &amp; Operation Management - RSM** — Internal seminar
-- 2026 **Department of Supply Chain Management &amp; University of Cologne** — Human-AI Reading Club 
-- 2025 **Negotiation and Team Resources (NTR)** - AI Negotiation Think Tank 
-- 2025 **Department Operation Management - Information Systems - IE University** — Brownbag seminar
+### Invited Seminar Presentations
+
+**Human or AI Favoritism: Operational Impact of Automating Negotiations**
+
+- 2026 **Department of Information Systems and Operations Management - Tilburg University** — External seminar
+- 2026 **Department of Supply Chain Management - University of Cologne** — Human-AI Reading Club
+- 2025 **Department of Technology &amp; Operations Management - RSM** — Internal seminar
+- 2025 **Negotiation and Team Resources (NTR)** — AI Negotiation Think Tank (online)
+- 2025 **Department of Operations Management &amp; Information Systems - IE University** — Brownbag seminar
+- 2025 **CEMS Research Seminar on Supply Chain Management**, Riezlern, Austria — Early-stage
 - 2024 **Psychology of AI Lab - RSM** — Brownbag seminar
+
+**Delegation under Uncertainty: How Agent Nature (Human/AI) Shapes B2B Negotiation**
+
+- 2026 **Department of Operations Management - UT Dallas Jindal School of Management** — External seminar
+- 2026 **Department of Information Systems and Operations Management - Tilburg University** — External seminar
+- 2026 **Department of Technology &amp; Operations Management - RSM** — Internal seminar
+- 2026 **Department of Supply Chain Management - University of Cologne** — Human-AI Reading Club
+- 2026 **CEMS Research Seminar on Supply Chain Management**, Riezlern, Austria
+
+**Post-Negotiation Behavior with AI Counterparts**
+
+- 2027 **CEMS Research Seminar on Supply Chain Management**, Riezlern, Austria
+- 2026 **Department of Information Systems and Operations Management - Tilburg University** — External seminar
+
+### Conference Presentations
+
+**Human or AI Favoritism: Operational Impact of Automating Negotiations**
+
+- **INFORMS Annual Meeting 2025**, Atlanta, US — Invited session
+- **MSOM 2025** — Manufacturing &amp; Service Operations Management, London, UK — Poster
+- **Behavioral Operations Conference — Young Scholars 2025**, Hamburg, Germany
+- **IPSERA Doctoral Workshop 2025**, Rotterdam, The Netherlands
+- **Behavioral Operations Research Summer School 2024**, Vienna, Austria — Poster
+
+**Delegation under Uncertainty: How Agent Nature (Human/AI) Shapes B2B Negotiation**
+
+- **INFORMS Annual Meeting 2026**, San Francisco, US — Invited session
+- **Behavioral Operations Conference — Young Scholars 2026**, Phoenix, US
+
+**Post-Negotiation Behavior with AI Counterparts**
+
+- **INFORMS Annual Meeting 2026**, San Francisco, US — Invited session
+
+**Out-of-Line: Experimental Evidence of Passenger Queue Jumping Behavior in Aircraft Boarding**
+
+- **POMS 2026** — Production and Operations Management Society Annual Conference, Reno, US
+
+**Hybrid (Rule-based + Gen AI) Chatbot: Automating Negotiations**
+
+- **CONVERSATIONS 2025** — Chatbots and Human-Centered AI, Lübeck, Germany — Short-paper presentation
+
+### Industry Engagement
+
+- 2026 **Austrian Airlines** — Presentation of experimental results to the Ground Experience Hub, Vienna, Austria
+- 2025 **AI Builders** — "Automated Negotiation: AI is Transforming Procurement with Hybrid LLM Chatbots", Amsterdam, The Netherlands ([Recording](https://www.youtube.com/watch?v=RCPtJney7-s&t=46m2s))
+- 2025 **DPW Awards** — Judge, Early and Growth Stage Startups, Amsterdam, The Netherlands
 
 ## Teaching
 
 **Rotterdam School of Management, Erasmus University Rotterdam**
 
 <div class="teaching-course-list">
+  <section class="teaching-course">
+    <h3>Research Methods, <span class="teaching-course__meta">MSc Supply Chain Management, Fall 2026</span></h3>
+    <p>Teaching assistant — Single lecture.</p>
+  </section>
+
   <section class="teaching-course">
     <h3>Fundamental Models of Operations Management, <span class="teaching-course__meta">MSc Business Analytics &amp; Management, Fall 2024, 2025</span></h3>
     <p>Teaching assistant — Designing and grading assignments + running group workshops.</p>
@@ -101,7 +165,7 @@ Airport Operations (Queue Jump) Passengers Boarding Before their Assigned Boardi
 
   <section class="teaching-course">
     <h3>Behavioral Operations, <span class="teaching-course__meta">MSc Supply Chain Management, Spring 2025, 2026</span></h3>
-    <p>Teaching assistant — Lecturer + Examination support.</p>
+    <p>Teaching assistant — Single lecture + Examination support.</p>
   </section>
 
   <section class="teaching-course">
@@ -112,6 +176,15 @@ Airport Operations (Queue Jump) Passengers Boarding Before their Assigned Boardi
   <section class="teaching-course">
     <h3>Internship Academic Supervision, <span class="teaching-course__meta">BSc IBA &amp; BSc BA, 2024–2026</span></h3>
     <p>Academic supervisor for bachelor internship trajectories.</p>
+  </section>
+</div>
+
+**SGH Warsaw School of Economics**
+
+<div class="teaching-course-list">
+  <section class="teaching-course">
+    <h3>Future Supply Chains, <span class="teaching-course__meta">MSc Supply Chain Management, Spring 2026</span></h3>
+    <p>Guest lecturer (online).</p>
   </section>
 </div>
 
@@ -129,19 +202,9 @@ Airport Operations (Queue Jump) Passengers Boarding Before their Assigned Boardi
   </section>
 </div>
 
-**SGH Warsaw School of Economics**
+## Awards and Funding
 
-<div class="teaching-course-list">
-  <section class="teaching-course">
-    <h3>Future Supply Chains, <span class="teaching-course__meta">MSc Supply Chain Management; 2026</span></h3>
-    <p>Guest lecturer.</p>
-  </section>
-</div>
-
-## Awards
-
-- **DPW Awards (Judging Panel)**, 2025  
-  Procurement leaders evaluating startups shaping the future of procurement and supply chain
+### Awards
 
 - **Anton Dreesmann Award**, 2024  
   Best retail thesis in the Netherlands, for "Forecasting Demand in Grocery Retail"
@@ -150,7 +213,30 @@ Airport Operations (Queue Jump) Passengers Boarding Before their Assigned Boardi
 
 - **2nd Place**, IBM–FC Groningen Digital Business Challenge, 2021
 
-### Summer Schools & Training
+### Research Funding
+
+- **Erasmus Research Institute of Management (ERIM) Lab Experiment Grant**, 2024 &amp; 2026  
+  €4,800 (2024) &amp; €6,000 (2026)
+
+- **NTR Research Grant**, 2025 — USD 8,160  
+  *Under which conditions are managers more (vs. less) likely to delegate negotiation authority to an AI agent?*
+
+- **Tilburg University CentER-lab Grant**, 2025 — €5,000  
+  *Delegating Negotiations to Humans or AI: Uncertain Superior vs Guaranteed Inferior Gains*
+
+## Academic Service
+
+- **Journal reviewing** — *Journal of Operations Management* (JOM), Technology Management department
+- **Conference reviewing** — Manufacturing &amp; Service Operations Management (MSOM) Conference, 2026; International Symposium on Chatbots and Human-Centered AI (CONVERSATIONS), 2025, 2026
+- **Grant reviewing** — Erasmus University GenAI Research Futures Grant, 2026
+- **Competition reviewing** — INFORMS Behavioral OM Section Best Working Paper Competition, 2025, 2026
+
+## Media
+
+- **Cadena SER** (radio interview with Sara Hidalgo), Jan 2024 — Disconnected and Disregarded: The Crisis of Obsolete Telecom Infrastructure in Rural Spain
+- **RSM**, 2025 — Full-time PhD testimony, featured among inspiring stories from PhD students
+
+## Summer Schools & Training
 
 - **Tinbergen Institute** — AI Agents
 - **Tinbergen Institute** — Deep Learning
