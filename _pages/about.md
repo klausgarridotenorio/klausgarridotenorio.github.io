@@ -23,7 +23,7 @@ Airport Operations (Queue Jump) Passengers Boarding Before their Assigned Boardi
 
 **Research Interests**
 
-Machine Customers, Behavioral Experiments, Decision Support Systems, Conversational Agents, Human-Bot Negotiations, Delegation to Virtual Agents, Human-Computer Interaction.
+Behavioral Experiments, Decision Support Systems,  Human-Computer Interaction, Conversational Agents, Negotiation, Queueing Theory, Airport Operations. 
 
 ## Research
 
